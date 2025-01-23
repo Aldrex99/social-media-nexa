@@ -17,10 +17,6 @@ const app: Application = express();
 applyMiddlewares(app);
 
 /* Setting up the routes */
-app.get("/api", (req, res) => {
-  res.send("Hello, World!");
-});
-
 app.use("/api/auth", authRouter);
 app.use("/api/user", checkAccessToken, userRouter);
 app.use("/api/todos", checkAccessToken, todosRouter);

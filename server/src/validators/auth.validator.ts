@@ -28,6 +28,9 @@ export const register = [
       icloud_remove_subaddress: false,
     })
     .withMessage("Adresse email invalide."),
+  body("username")
+    .isString()
+    .withMessage("Le nom d'utilisateur doit être une chaîne de caractères."),
   passwordValidator,
   body("confirmPassword").custom((value, { req }) => {
     if (value !== req.body.password) {

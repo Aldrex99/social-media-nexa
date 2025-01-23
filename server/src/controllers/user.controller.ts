@@ -3,9 +3,9 @@ import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { validationErrorsUtil } from "../utils/validatorError.util";
 
-export const getUser = (req: Request, res: Response) => {
+export const getUser = async (req: Request, res: Response) => {
   try {
-    const user = userService.getUser(req.user?.id ?? "");
+    const user = await userService.getUser(req.user?.id ?? "");
     res.status(200).json(user);
   } catch (error) {
     console.error("Error getting user:", error);

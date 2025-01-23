@@ -28,6 +28,7 @@ export const checkAccessToken = async (
 
     req.user = {
       id: rawUser.userId,
+      role: rawUser.role,
       iat: rawUser.iat ?? 0,
       exp: rawUser.exp ?? 0,
     };
@@ -79,6 +80,7 @@ export const checkRefreshToken = async (
 
     req.user = {
       id: rawUser.userId,
+      role: rawUser.role,
       iat: rawUser.iat ?? 0,
       exp: rawUser.exp ?? 0,
     };
