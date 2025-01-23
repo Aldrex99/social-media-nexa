@@ -23,7 +23,7 @@ export default function Todo() {
   const [selectedTodo, setSelectedTodo] = useState<ITodo | null>(null);
 
   useEffect(() => {
-    document.title = "Todo List";
+    document.title = "Social Nexa | Todo List";
   }, []);
 
   useEffect(() => {
@@ -67,17 +67,19 @@ export default function Todo() {
           selectedTodo={selectedTodo as ITodo}
         />
       )}
-      <div className="flex min-h-[100vh] items-center justify-center">
-        <div className="relative mx-6 flex w-full flex-col space-y-4 rounded-lg border bg-white px-6 py-12 shadow sm:px-12">
-          <h1 className="mb-4 flex justify-center text-2xl font-semibold text-blue-500">
+      <div className="flex min-h-screen flex-col">
+        <div className="flex p-2">
+          <h1 className="flex-1 py-2 pl-2 text-2xl font-semibold text-blue-500">
             Todo List
           </h1>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="absolute right-4 top-8 w-fit rounded-lg bg-blue-500 px-4 py-2 font-semibold text-white"
+            className="w-fit rounded-lg bg-blue-500 px-3 py-1 text-white outline-none focus-visible:outline-none focus-visible:outline-offset-2 focus-visible:outline-blue-500"
           >
             Ajouter une tâche
           </button>
+        </div>
+        <div className="flex w-full flex-col space-y-4 px-3 sm:px-6">
           <ul
             role="list"
             className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"

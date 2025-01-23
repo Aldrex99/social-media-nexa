@@ -10,7 +10,6 @@ import {
 } from "@heroicons/react/24/outline";
 
 type TTodoCardProps = {
-  key: string;
   todo: ITodo;
   todos: ITodo[];
   setTodos: (todos: ITodo[]) => void;
@@ -24,7 +23,6 @@ function classNames(...classes: (string | boolean)[]) {
 }
 
 export function TodoCard({
-  key,
   todo,
   todos,
   setTodos,
@@ -62,10 +60,21 @@ export function TodoCard({
   };
 
   return (
-    <li
-      key={key}
-      className="col-span-1 flex flex-col rounded-lg border border-gray-300 text-center shadow-md"
-    >
+    <li className="relative col-span-1 flex flex-col rounded-lg border border-gray-300 bg-white text-center shadow-md">
+      <button
+        type="button"
+        className="absolute right-2 top-2"
+        onClick={handleDone}
+        title={
+          todo.done ? "Marquer comme non terminé" : "Marquer comme terminé"
+        }
+      >
+        {todo.done ? (
+          <XCircleIcon className="h-6 w-6 text-red-500" />
+        ) : (
+          <CheckCircleIcon className="h-6 w-6 text-green-500" />
+        )}
+      </button>
       <div className="flex flex-1 flex-col p-8">
         {todo.imageLink ? (
           <img
@@ -94,22 +103,6 @@ export function TodoCard({
             >
               {todo.done ? "Completed" : "In progress"}
             </span>
-            <button
-              type="button"
-              className="font-semibold"
-              onClick={handleDone}
-              title={
-                todo.done
-                  ? "Marquer comme non terminé"
-                  : "Marquer comme terminé"
-              }
-            >
-              {todo.done ? (
-                <XCircleIcon className="h-4 w-4 text-orange-500" />
-              ) : (
-                <CheckCircleIcon className="h-4 w-4 text-green-500" />
-              )}
-            </button>
           </dd>
           <dt className="sr-only">Erreur</dt>
           <dd className="mt-3 text-sm text-red-500">{error}</dd>
