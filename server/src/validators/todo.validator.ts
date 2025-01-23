@@ -30,8 +30,8 @@ export const updateTodo = [
     .withMessage("La description doit être une chaîne de caractères."),
   body("imageLink")
     .optional()
-    .isURL()
-    .withMessage("Le lien de l'image doit être une URL valide."),
+    .isString()
+    .withMessage("Le lien de l'image doit être une chaîne de caractères."),
   body("done")
     .optional()
     .isBoolean()

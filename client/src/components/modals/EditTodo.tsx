@@ -61,10 +61,6 @@ export function EditTodoModal({
       return;
     }
 
-    console.log("selectedTodo", selectedTodo.imageLink);
-
-    console.log("imageLink", imageLink);
-
     try {
       const data: {
         title?: string;
@@ -85,15 +81,13 @@ export function EditTodoModal({
         data.description = description;
       }
 
-      if (imageLink !== selectedTodo.imageLink && imageLink !== "") {
+      if (imageLink !== selectedTodo.imageLink) {
         data.imageLink = imageLink;
       }
 
       if (done !== selectedTodo.done) {
         data.done = done;
       }
-
-      console.log("data", data);
 
       const newTodo = await fetcher(`/todos/${selectedTodo.id}`, {
         method: "PUT",

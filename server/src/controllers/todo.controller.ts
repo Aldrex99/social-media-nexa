@@ -76,7 +76,6 @@ export const createTodo = async (req: Request, res: Response) => {
   try {
     const { title, description, imageLink, done } = req.body;
 
-    // Appeler le service pour créer une nouvelle Todo
     const newTodo = await TodoService.createTodo({
       user_id: req.user?.id,
       title,
@@ -107,9 +106,6 @@ export const updateTodo = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { title, description, imageLink, done } = req.body;
 
-    console.log("imageLink", imageLink);
-
-    // Appeler le service pour mettre à jour une Todo
     const updatedTodo = await TodoService.updateTodo(id, req.user?.id ?? "", {
       title,
       description,

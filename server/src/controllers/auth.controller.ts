@@ -89,7 +89,6 @@ export const newAccessTokenFromRefreshToken = async (
       res.status(401).json({ message: "Unauthorized" });
       return;
     }
-    console.log("newAccessTokenFromRefreshToken");
 
     const accessToken = generateAccessToken(req.user?.id, req.user?.role);
 
