@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { fetcher } from "../utils/fetch";
 
 interface IUser {
@@ -11,9 +11,8 @@ interface IUser {
 
 interface IUserContextValue {
   user: IUser | null;
-  setUser: React.Dispatch<React.SetStateAction<any>>;
+  userIsLoaded?: boolean;
   isAuthenticated: boolean;
-  setIsAuthenticated?: React.Dispatch<React.SetStateAction<boolean>>;
   getUser: () => Promise<void>;
   logout: () => boolean;
 }
@@ -29,10 +28,12 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = React.useState<IUser | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [user, setUser] = useState<IUser | null>(null);
+  const [userIsLoaded, setUserIsLoaded] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const getUser = async () => {
+    setUserIsLoaded(false);
     try {
       const response = await fetcher("/user");
 
@@ -50,6 +51,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setIsAuthenticated(true);
     } catch (error) {
       console.error("Failed to get user", error);
+    } finally {
+      setUserIsLoaded(true);
     }
   };
 
@@ -69,15 +72,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     getUser();
   }, []);
 
   const value: IUserContextValue = {
     user,
-    setUser,
+    userIsLoaded,
     isAuthenticated,
-    setIsAuthenticated,
     getUser,
     logout,
   };

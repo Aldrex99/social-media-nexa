@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import { Login } from "./pages/Login";
-import { Register } from "./pages/Register";
-import { Todo } from "./pages/Todo";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Todo from "./pages/Todo";
 import { UserProvider } from "./contexts/UserContext";
-import { PrivateRoute } from "@utils/PrivateRoute";
+import { PrivateRoute } from "./utils/PrivateRoute";
 
 function App() {
   return (

@@ -15,7 +15,7 @@ export interface ITodo {
   updatedAt: Date;
 }
 
-export function Todo() {
+export default function Todo() {
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);

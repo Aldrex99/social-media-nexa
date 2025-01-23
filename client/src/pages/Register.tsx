@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { fetcher } from "../utils/fetch";
 import { TextInput } from "../components/inputs/TextInput";
 
-export function Register() {
+export default function Register() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

@@ -1,16 +1,21 @@
+import Loading from "../pages/Loading";
 import { Navigate, Outlet } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 
 export const PrivateRoute = ({ acceptedRole }: { acceptedRole: string[] }) => {
-  const { user, isAuthenticated } = useUser();
+  const { user, isAuthenticated, userIsLoaded } = useUser();
 
-  if (!user || !isAuthenticated) {
+  if (!userIsLoaded) {
+    return <Loading />;
+  }
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" />;
   }
 
-  if (!acceptedRole.includes(user.role)) {
-    return <Navigate to="/login" />;
+  if (user && acceptedRole.includes(user.role)) {
+    return <Outlet />;
   }
 
-  return <Outlet />;
+  return <Navigate to="/login" />;
 };

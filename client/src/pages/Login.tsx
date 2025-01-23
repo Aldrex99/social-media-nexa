@@ -4,7 +4,7 @@ import { fetcher } from "../utils/fetch";
 import { useUser } from "../contexts/UserContext";
 import { TextInput } from "../components/inputs/TextInput";
 
-export function Login() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -30,7 +30,7 @@ export function Login() {
 
       await getUser();
 
-      navigate("/todo-list");
+      navigate("/post");
     } catch (error) {
       setError((error as Error).message ?? "Une erreur s'est produite");
     }
