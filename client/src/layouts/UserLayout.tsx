@@ -13,8 +13,8 @@ import {
   XMarkIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import { PlusIcon } from "@heroicons/react/20/solid";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
+import { classNames } from "../utils/style";
 import { Link, useLocation } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 
@@ -26,10 +26,6 @@ const userNavigation = [
   { name: "Your Profile", to: "/profile" },
   { name: "Sign out", to: "/logout" },
 ];
-
-function classNames(...classes: (string | boolean)[]) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function UserLayout({
   children,
@@ -90,15 +86,6 @@ export default function UserLayout({
               </div>
             </div>
             <div className="flex items-center">
-              <div className="shrink-0">
-                <button
-                  type="button"
-                  className="relative inline-flex items-center gap-x-1.5 rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
-                >
-                  <PlusIcon aria-hidden="true" className="-ml-0.5 size-5" />
-                  Nouveau post
-                </button>
-              </div>
               <div className="hidden md:ml-4 md:flex md:shrink-0 md:items-center">
                 <button
                   type="button"
@@ -217,7 +204,7 @@ export default function UserLayout({
           </div>
         </DisclosurePanel>
       </Disclosure>
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-6xl">
         <main>{children}</main>
       </div>
     </div>

@@ -10,7 +10,7 @@ type TTextInputProps = {
   className?: string;
 };
 
-export function TextInput({
+export default function TextInput({
   label,
   type,
   placeholder,
@@ -31,7 +31,7 @@ export function TextInput({
   };
 
   return (
-    <div className={`${className} relative`}>
+    <div className={`relative ${className ?? ""}`}>
       <label
         htmlFor={label}
         className="absolute -top-2 left-2 inline-block rounded-lg bg-white px-1 text-xs font-medium text-gray-900"

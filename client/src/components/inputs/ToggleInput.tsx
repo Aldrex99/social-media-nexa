@@ -6,7 +6,11 @@ type TToggleInputProps = {
   label: string;
 };
 
-export function ToggleInput({ checked, setChecked, label }: TToggleInputProps) {
+export default function ToggleInput({
+  checked,
+  setChecked,
+  label,
+}: TToggleInputProps) {
   return (
     <Switch
       checked={checked}

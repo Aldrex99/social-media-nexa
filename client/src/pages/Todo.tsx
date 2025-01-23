@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetcher } from "../utils/fetch";
-import { CreateTodoModal } from "../components/modals/CreateTodo";
-import { EditTodoModal } from "../components/modals/EditTodo";
-import { DeleteTodoModal } from "../components/modals/DeleteTodo";
-import { TodoCard } from "../components/TodoCard";
+import CreateTodoModal from "../components/modals/CreateTodo";
+import EditTodoModal from "../components/modals/EditTodo";
+import DeleteTodoModal from "../components/modals/DeleteTodo";
+import TodoCard from "../components/TodoCard";
 
 export interface ITodo {
   id: string;

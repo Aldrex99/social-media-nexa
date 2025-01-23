@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ITodo } from "../pages/Todo";
 import { fetcher } from "../utils/fetch";
 import {
   PhotoIcon,
@@ -8,6 +7,9 @@ import {
   CheckCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
+import Button from "./buttons/Button";
+import { classNames } from "../utils/style";
+import { ITodo } from "../pages/Todo";
 
 type TTodoCardProps = {
   todo: ITodo;
@@ -18,11 +20,7 @@ type TTodoCardProps = {
   setSelectedTodo: (selectedTodo: ITodo) => void;
 };
 
-function classNames(...classes: (string | boolean)[]) {
-  return classes.filter(Boolean).join(" ");
-}
-
-export function TodoCard({
+export default function TodoCard({
   todo,
   todos,
   setTodos,
@@ -61,20 +59,21 @@ export function TodoCard({
 
   return (
     <li className="relative col-span-1 flex flex-col rounded-lg border border-gray-300 bg-white text-center shadow-md">
-      <button
+      <Button
         type="button"
-        className="absolute right-2 top-2"
         onClick={handleDone}
+        className="absolute right-2 top-2 px-0 py-0"
         title={
           todo.done ? "Marquer comme non terminé" : "Marquer comme terminé"
         }
+        variant="none"
       >
         {todo.done ? (
           <XCircleIcon className="h-6 w-6 text-red-500" />
         ) : (
           <CheckCircleIcon className="h-6 w-6 text-green-500" />
         )}
-      </button>
+      </Button>
       <div className="flex flex-1 flex-col p-8">
         {todo.imageLink ? (
           <img
@@ -111,24 +110,26 @@ export function TodoCard({
       <div>
         <div className="-mt-px flex">
           <div className="flex w-0 flex-1">
-            <button
+            <Button
               type="button"
-              className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-1 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-blue-500 hover:text-blue-700"
               onClick={handleEdit}
+              className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-1 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-blue-500 hover:text-blue-700"
+              variant="none"
             >
               <PencilIcon className="h-4 w-4" />
               <span>Modifier</span>
-            </button>
+            </Button>
           </div>
           <div className="-ml-px flex w-0 flex-1">
-            <button
+            <Button
               type="button"
-              className="relative inline-flex w-0 flex-1 items-center justify-center gap-1 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-red-500 hover:text-red-700"
               onClick={handleDelete}
+              className="relative inline-flex w-0 flex-1 items-center justify-center gap-1 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-red-500 hover:text-red-700"
+              variant="none"
             >
               <TrashIcon className="h-4 w-4" />
               <span>Supprimer</span>
-            </button>
+            </Button>
           </div>
         </div>
       </div>

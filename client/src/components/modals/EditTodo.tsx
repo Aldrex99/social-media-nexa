@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+import { fetcher } from "../../utils/fetch";
+import { DialogTitle } from "@headlessui/react";
 import {
   CheckIcon,
   XMarkIcon,
   PlusCircleIcon,
 } from "@heroicons/react/24/outline";
-import { TextInput } from "../inputs/TextInput";
-import { ToggleInput } from "../inputs/ToggleInput";
-import { fetcher } from "../../utils/fetch";
+import BaseModal from "./BaseModal";
+import TextInput from "../inputs/TextInput";
+import ToggleInput from "../inputs/ToggleInput";
+import Button from "../buttons/Button";
 import { ITodo } from "../../pages/Todo";
 
 type TEditTodoModalProps = {
@@ -23,7 +20,7 @@ type TEditTodoModalProps = {
   selectedTodo: ITodo;
 };
 
-export function EditTodoModal({
+export default function EditTodoModal({
   open,
   setOpen,
   todos,
@@ -62,29 +59,22 @@ export function EditTodoModal({
     }
 
     try {
-      const data: {
-        title?: string;
-        description?: string;
-        imageLink?: string;
-        done?: boolean;
-      } = {
+      const data = {
         title: selectedTodo.title,
         description: selectedTodo.description,
+        imageLink: selectedTodo.imageLink,
         done: selectedTodo.done,
       };
 
       if (title !== selectedTodo.title) {
         data.title = title;
       }
-
       if (description !== selectedTodo.description) {
         data.description = description;
       }
-
       if (imageLink !== selectedTodo.imageLink) {
         data.imageLink = imageLink;
       }
-
       if (done !== selectedTodo.done) {
         data.done = done;
       }
@@ -121,115 +111,103 @@ export function EditTodoModal({
   };
 
   return (
-    <Dialog open={open} onClose={setOpen} className="relative z-10">
-      <DialogBackdrop
-        transition
-        className="fixed inset-0 bg-gray-500/75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
-      />
-
-      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-          <DialogPanel
-            transition
-            className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-sm sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
+    <BaseModal open={open} setOpen={setOpen}>
+      <div>
+        <div className="flex flex-col space-y-6">
+          <DialogTitle
+            as="h3"
+            className="text-center text-base font-semibold text-gray-900"
           >
-            <div>
-              <div className="mt-3 sm:mt-5">
-                <DialogTitle
-                  as="h3"
-                  className="text-center text-base font-semibold text-gray-900"
+            Modifier la tâche
+          </DialogTitle>
+          <div className="flex flex-col space-y-4">
+            <TextInput
+              label="Titre"
+              type="text"
+              placeholder="Titre"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <TextInput
+              label="Description"
+              type="text"
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <div className="ml-1 flex items-center gap-2 text-gray-900">
+              <ToggleInput
+                checked={done}
+                setChecked={setDone}
+                label="Statut tâche"
+              />
+              <span className="text-sm">Tâche complétée</span>
+            </div>
+            {showImageLinkInput ? (
+              <div className="flex items-center space-x-2">
+                <TextInput
+                  label="Lien de l'image"
+                  type="text"
+                  placeholder="Lien de l'image"
+                  value={imageLink ?? ""}
+                  onChange={(e) => setImageLink(e.target.value)}
+                  className="flex-1"
+                />
+                <Button
+                  type="button"
+                  onClick={handleDeleteImageLink}
+                  className="px-0 py-0 text-red-500 hover:text-red-600"
+                  variant="none"
                 >
-                  Modifier la tâche
-                </DialogTitle>
-                <div className="mt-2 space-y-3">
-                  <TextInput
-                    label="Titre"
-                    type="text"
-                    placeholder="Titre"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                  />
-                  <TextInput
-                    label="Description"
-                    type="text"
-                    placeholder="Description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                  <div className="ml-1 flex items-center gap-2 text-gray-900">
-                    <ToggleInput
-                      checked={done}
-                      setChecked={setDone}
-                      label="Statut tâche"
-                    />
-                    <span className="text-sm">Tâche complétée</span>
-                  </div>
-                  {showImageLinkInput ? (
-                    <div className="flex space-x-2">
-                      <TextInput
-                        label="Lien de l'image"
-                        type="text"
-                        placeholder="Lien de l'image"
-                        value={imageLink ?? ""}
-                        onChange={(e) => setImageLink(e.target.value)}
-                        className="flex-1"
-                      />
-                      <button
-                        type="button"
-                        className="text-red-500 hover:text-red-600"
-                        onClick={handleDeleteImageLink}
-                      >
-                        <XMarkIcon className="h-5 w-5" />
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      type="button"
-                      className="ml-1 flex items-center text-blue-500 hover:text-blue-600"
-                      onClick={() => setShowImageLinkInput(true)}
-                    >
-                      <PlusCircleIcon className="mr-2 h-5 w-5" />
-                      Ajouter une image
-                    </button>
-                  )}
-                </div>
+                  <XMarkIcon className="h-5 w-5" />
+                </Button>
               </div>
-              <div className="mt-3 sm:mt-5">
-                {error && (
-                  <div className="rounded-md bg-red-100 p-2 text-red-500">
-                    {error}
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="mt-5 sm:mt-6">
-              <button
+            ) : (
+              <Button
                 type="button"
-                className="flex w-full justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                disabled={loading}
-                onClick={handleSubmit}
+                onClick={() => setShowImageLinkInput(true)}
+                variant="primaryFlat"
+                className="m-1 border-none px-0 py-0 hover:bg-transparent hover:text-blue-700"
               >
-                {loading ? (
-                  "Chargement..."
-                ) : (
-                  <span className="flex">
-                    <CheckIcon className="mr-2 h-5 w-5" />
-                    Enregistrer
-                  </span>
-                )}
-              </button>
-              <button
-                type="button"
-                className="mt-3 flex w-full justify-center rounded-md border border-blue-500 px-4 py-2 text-sm font-medium text-blue-500 hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                disabled={loading}
-                onClick={handleCancel}
-              >
-                Annuler
-              </button>
-            </div>
-          </DialogPanel>
+                <PlusCircleIcon className="mr-2 h-5 w-5" />
+                Ajouter une image
+              </Button>
+            )}
+          </div>
         </div>
+        {error && (
+          <div className="rounded-md bg-red-100 px-4 py-2 text-red-500">
+            {error}
+          </div>
+        )}
       </div>
-    </Dialog>
+      <div className="flex flex-col space-y-4">
+        <Button
+          type="button"
+          disabled={loading}
+          onClick={handleSubmit}
+          variant="primary"
+          className="w-full"
+        >
+          {loading ? (
+            "Chargement..."
+          ) : (
+            <span className="flex">
+              <CheckIcon className="mr-2 h-5 w-5" />
+              Enregistrer
+            </span>
+          )}
+        </Button>
+        <Button
+          type="button"
+          onClick={handleCancel}
+          disabled={loading}
+          variant="primaryFlat"
+          className="w-full"
+        >
+          Annuler
+        </Button>
+      </div>
+    </BaseModal>
   );
 }

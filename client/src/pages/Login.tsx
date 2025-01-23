@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { fetcher } from "../utils/fetch";
 import { useUser } from "../contexts/UserContext";
-import { TextInput } from "../components/inputs/TextInput";
+import TextInput from "../components/inputs/TextInput";
+import Button from "../components/buttons/Button";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -66,13 +67,19 @@ export default function Login() {
             setPassword(e.target.value)
           }
         />
-        <button
-          className="rounded-md bg-blue-500 py-2 text-white hover:bg-blue-600"
+        <Button
+          type="button"
           onClick={handleSubmit}
+          className="w-full"
+          variant="primary"
         >
           Connexion
-        </button>
-        {error && <p className="text-xs text-red-500">{error}</p>}
+        </Button>
+        {error && (
+          <div className="rounded-md bg-red-100 px-4 py-2 text-red-500">
+            {error}
+          </div>
+        )}
         <Link to="/register" className="text-blue-500 hover:to-blue-900">
           Créer un compte
         </Link>
