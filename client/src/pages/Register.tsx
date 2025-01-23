@@ -5,6 +5,7 @@ import { TextInput } from "../components/inputs/TextInput";
 
 export function Register() {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -29,10 +30,14 @@ export function Register() {
     }
 
     try {
-      await fetcher("/auth/register", {
-        method: "POST",
-        body: JSON.stringify({ email, password, confirmPassword }),
-      });
+      await fetcher(
+        "/auth/register",
+        {
+          method: "POST",
+          body: JSON.stringify({ email, username, password, confirmPassword }),
+        },
+        false,
+      );
 
       navigate("/login");
     } catch (error) {
@@ -55,6 +60,15 @@ export function Register() {
           value={email}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setEmail(e.target.value)
+          }
+        />
+        <TextInput
+          label="Nom d'utilisateur"
+          type="text"
+          placeholder="Nom d'utilisateur"
+          value={username}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setUsername(e.target.value)
           }
         />
         <TextInput

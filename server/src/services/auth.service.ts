@@ -9,6 +9,7 @@ export const register = async (data: Partial<IUser>) => {
 
     const user = new UserModel(data);
     await user.save();
+    return;
   } catch (error) {
     throw error;
   }

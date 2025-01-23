@@ -15,7 +15,7 @@ export const register = async (req: Request, res: Response) => {
     const { email, username, password } = req.body;
 
     await authService.register({ email, username, password });
-    res.status(201);
+    res.status(201).json({ message: "User registered" });
   } catch (error) {
     console.error("Error registering user:", error);
     res
@@ -39,8 +39,16 @@ export const login = async (req: Request, res: Response) => {
     const accessToken = generateAccessToken(user.id, user.role);
     const refreshToken = generateRefreshToken(user.id, user.role);
 
-    res.cookie("accessToken", accessToken, { httpOnly: true });
-    res.cookie("refreshToken", refreshToken, { httpOnly: true });
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
 
     res.status(200).json(user);
   } catch (error) {

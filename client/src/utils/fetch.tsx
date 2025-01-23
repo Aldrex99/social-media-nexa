@@ -50,7 +50,7 @@ export const fetcher = async (
       }
       case 422: {
         const errorMessage = json.errors
-          .map((error: { message: string }) => error.message)
+          .map((error: { msg: string }) => error.msg)
           .join("\n");
         throw new Error(errorMessage);
       }
