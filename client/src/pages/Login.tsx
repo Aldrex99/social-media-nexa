@@ -12,7 +12,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Se connecter";
+    document.title = "Social Nexa | Se connecter";
   }, []);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {

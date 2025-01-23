@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div role="status" className="flex h-screen w-screen bg-gray-50">
+    <div role="status" className="flex h-screen w-screen">
       <div className="mx-auto my-auto flex">
         <svg
           className={`mr-2 inline h-16 w-16 animate-spin fill-blue-500 text-gray-200`}

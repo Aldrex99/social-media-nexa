@@ -14,7 +14,7 @@ export default function Register() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Créer un compte";
+    document.title = "Social Nexa | Créer un compte";
   }, []);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {

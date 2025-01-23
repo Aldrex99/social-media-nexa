@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export default function Post() {
   useEffect(() => {
-    document.title = "Post";
+    document.title = "Social Nexa | Post";
   }, []);
 
   return (

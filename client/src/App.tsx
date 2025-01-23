@@ -12,7 +12,7 @@ import NotFound from "./pages/NotFound";
 function App() {
   return (
     <UserProvider>
-      <div className="min-h-[100vh] overflow-y-auto overflow-x-hidden bg-gray-50">
+      <div className="min-h-[100vh] overflow-y-auto overflow-x-hidden bg-gray-100">
         <Router>
           <Routes>
             <Route element={<PrivateRoute acceptedRole={["guest"]} />}>

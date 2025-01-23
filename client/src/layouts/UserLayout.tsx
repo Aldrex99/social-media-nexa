@@ -45,8 +45,8 @@ export default function UserLayout({
   });
 
   return (
-    <>
-      <Disclosure as="nav" className="bg-gray-800">
+    <div className="min-h-screen bg-gray-100">
+      <Disclosure as="nav" className="h-16 bg-gray-800">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 justify-between">
             <div className="flex">
@@ -220,6 +220,6 @@ export default function UserLayout({
       <div className="mx-auto max-w-7xl">
         <main>{children}</main>
       </div>
-    </>
+    </div>
   );
 }
