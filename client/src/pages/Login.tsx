@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { fetcher } from "../utils/fetch";
+import { useUser } from "../contexts/UserContext";
 import { TextInput } from "../components/inputs/TextInput";
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { getUser } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,6 +27,8 @@ export function Login() {
         method: "POST",
         body: JSON.stringify({ email, password }),
       });
+
+      await getUser();
 
       navigate("/todo-list");
     } catch (error) {
