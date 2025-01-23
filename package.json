@@ -2,7 +2,7 @@
   "name": "social-media",
   "version": "0.1.0",
   "scripts": {
-    "setup": "npm install && npm install --prefix ./client && npm install --prefix ./server && cd ./server && npx prisma generate && cd ..",
+    "setup": "npm install && npm install --prefix ./client && npm install --prefix ./server && cd ..",
     "dev:client": "cd client && npm run dev",
     "dev:server": "cd server && npm run dev",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",

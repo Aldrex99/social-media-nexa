@@ -32,7 +32,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [userIsLoaded, setUserIsLoaded] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const getUser = async () => {
+  const getUser = async (reloadGet = false) => {
     setUserIsLoaded(false);
     try {
       const response = await fetcher("/user");
@@ -50,7 +50,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
       setIsAuthenticated(true);
     } catch (error) {
-      console.error("Failed to get user", error);
+      if (reloadGet) {
+        console.log("Failed to get user", error);
+        return;
+      }
     } finally {
       setUserIsLoaded(true);
     }
@@ -67,7 +70,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
       return true;
     } catch (error) {
-      console.error("Failed to logout", error);
+      console.log("Failed to logout", error);
       return false;
     }
   };

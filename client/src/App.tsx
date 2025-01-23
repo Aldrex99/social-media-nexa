@@ -15,7 +15,7 @@ function App() {
       <div className="min-h-[100vh] overflow-y-auto overflow-x-hidden bg-gray-100">
         <Router>
           <Routes>
-            <Route element={<PrivateRoute acceptedRole={["guest"]} />}>
+            <Route>
               <Route path="/" element={<Login />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />

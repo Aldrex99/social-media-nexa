@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useUser } from "../contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import { fetcher } from "../utils/fetch";
 import { TextInput } from "../components/inputs/TextInput";
@@ -11,11 +12,18 @@ export default function Register() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const { isAuthenticated } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Social Nexa | Créer un compte";
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/post");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();

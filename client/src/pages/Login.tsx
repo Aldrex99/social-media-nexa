@@ -8,12 +8,18 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { getUser } = useUser();
+  const { getUser, isAuthenticated } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Social Nexa | Se connecter";
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/post");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
