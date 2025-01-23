@@ -13,6 +13,10 @@ export const PrivateRoute = ({ acceptedRole }: { acceptedRole: string[] }) => {
     return <Navigate to="/login" />;
   }
 
+  if (acceptedRole.includes("guest") && isAuthenticated) {
+    return <Navigate to="/post" />;
+  }
+
   if (user && acceptedRole.includes(user.role)) {
     return <Outlet />;
   }
