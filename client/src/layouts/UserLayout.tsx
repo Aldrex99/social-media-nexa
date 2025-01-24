@@ -14,9 +14,9 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
-import { classNames } from "../utils/style";
+import { classNames } from "@utils/style";
 import { Link, useLocation } from "react-router-dom";
-import { useUser } from "../contexts/UserContext";
+import { useUser } from "@contexts/UserContext";
 
 const navigation = [
   { name: "Post", to: "/post", current: true },

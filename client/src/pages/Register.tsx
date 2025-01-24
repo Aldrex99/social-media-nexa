@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useUser } from "../contexts/UserContext";
+import { useUser } from "@contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
-import { fetcher } from "../utils/fetch";
-import TextInput from "../components/inputs/TextInput";
-import Button from "../components/buttons/Button";
+import { fetcher } from "@utils/fetch";
+import TextInput from "@components/inputs/TextInput";
+import Button from "@components/buttons/Button";
 
 export default function Register() {
   const [email, setEmail] = useState("");

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { fetcher } from "../utils/fetch";
+import { fetcher } from "@utils/fetch";
 
 interface IUser {
   id: string;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fetcher } from "../utils/fetch";
+import { fetcher } from "@utils/fetch";
 import {
   PhotoIcon,
   PencilIcon,
@@ -7,9 +7,9 @@ import {
   CheckCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
-import Button from "./buttons/Button";
-import { classNames } from "../utils/style";
-import { ITodo } from "../pages/Todo";
+import Button from "@components/buttons/Button";
+import { classNames } from "@utils/style";
+import { ITodo } from "@pages/Todo";
 
 type TTodoCardProps = {
   todo: ITodo;

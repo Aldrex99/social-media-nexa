@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { fetcher } from "../../utils/fetch";
+import { fetcher } from "@utils/fetch";
 import { DialogTitle } from "@headlessui/react";
 import {
   CheckIcon,
   XMarkIcon,
   PlusCircleIcon,
 } from "@heroicons/react/24/outline";
-import BaseModal from "./BaseModal";
-import TextInput from "../inputs/TextInput";
-import ToggleInput from "../inputs/ToggleInput";
-import Button from "../buttons/Button";
-import { ITodo } from "../../pages/Todo";
+import BaseModal from "@components/modals/BaseModal";
+import TextInput from "@components/inputs/TextInput";
+import ToggleInput from "@components/inputs/ToggleInput";
+import Button from "@components/buttons/Button";
+import { ITodo } from "@pages/Todo";
 
 type TCreateTodoModalProps = {
   open: boolean;

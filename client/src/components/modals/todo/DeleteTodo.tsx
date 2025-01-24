@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { fetcher } from "../../utils/fetch";
+import { fetcher } from "@utils/fetch";
 import { DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import BaseModal from "./BaseModal";
-import Button from "../../components/buttons/Button";
-import { ITodo } from "../../pages/Todo";
+import BaseModal from "@components/modals/BaseModal";
+import Button from "@components/buttons/Button";
+import { ITodo } from "@pages/Todo";
 
 type TDeleteTodoModalProps = {
   open: boolean;

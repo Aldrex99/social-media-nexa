@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { UserProvider } from "./contexts/UserContext";
-import { PrivateRoute } from "./utils/PrivateRoute";
-import UserRouteWrapper from "./utils/UserRouteWrapper";
+import { UserProvider } from "@contexts/UserContext";
+import { PrivateRoute } from "@utils/PrivateRoute";
+import UserRouteWrapper from "@utils/UserRouteWrapper";
 
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Todo from "./pages/Todo";
-import Post from "./pages/Post";
-import NotFound from "./pages/NotFound";
+import Login from "@pages/Login";
+import Register from "@pages/Register";
+import Todo from "@pages/Todo";
+import Post from "@pages/Post";
+import NotFound from "@pages/NotFound";
 
 function App() {
   return (

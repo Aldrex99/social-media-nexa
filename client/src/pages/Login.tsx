@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { fetcher } from "../utils/fetch";
-import { useUser } from "../contexts/UserContext";
-import TextInput from "../components/inputs/TextInput";
-import Button from "../components/buttons/Button";
+import { fetcher } from "@utils/fetch";
+import { useUser } from "@contexts/UserContext";
+import TextInput from "@components/inputs/TextInput";
+import Button from "@components/buttons/Button";
 
 export default function Login() {
   const [email, setEmail] = useState("");

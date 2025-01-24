@@ -1,5 +1,5 @@
 import { MouseEventHandler } from "react";
-import { classNames } from "../../utils/style";
+import { classNames } from "@utils/style";
 
 type TButtonProps = {
   children: React.ReactNode;
