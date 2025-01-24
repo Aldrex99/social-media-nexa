@@ -15,7 +15,7 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadStatus, setUploadStatus] = useState<string | null>(null);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
-  const { getUser } = useUser();
+  const { getMe } = useUser();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -43,7 +43,7 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
       });
 
       setFileUrl(response.link);
-      getUser();
+      getMe();
       setUploadStatus("Photo de profil mise à jour");
       setOpen(false);
     } catch (error) {
@@ -61,7 +61,7 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
           Créer une tâche
         </DialogTitle>
         <div className="flex flex-col space-y-4">
-          <div className="flex w-full items-center justify-center">
+          <div className="flex w-full items-center justify-center object-cover">
             <label
               htmlFor="dropzone-file"
               className="flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 hover:bg-gray-100"

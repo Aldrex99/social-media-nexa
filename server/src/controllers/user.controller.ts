@@ -3,9 +3,9 @@ import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { validationErrorsUtil } from "../utils/validatorError.util";
 
-export const getUser = async (req: Request, res: Response) => {
+export const getMe = async (req: Request, res: Response) => {
   try {
-    const user = await userService.getUser(req.user?.id ?? "");
+    const user = await userService.getMe(req.user?.id ?? "");
     res.status(200).json(user);
   } catch (error) {
     console.error("Error getting user:", error);
@@ -19,7 +19,7 @@ export const uploadAvatar = async (req: Request, res: Response) => {
   try {
     const fileName = req.fileName ?? "";
 
-    const profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/${fileName}`;
+    const profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/uploads/${fileName}`;
 
     await userService.uploadAvatar(req.user?.id ?? "", profilePictureLink);
 

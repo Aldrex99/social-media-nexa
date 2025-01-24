@@ -106,7 +106,7 @@ export default function UserLayout({
                         <img
                           alt="Photo de profil de votre compte"
                           src={user!.profilePictureLink}
-                          className="size-8 rounded-full"
+                          className="size-8 rounded-full object-cover"
                         />
                       ) : (
                         <UserCircleIcon
@@ -161,9 +161,9 @@ export default function UserLayout({
               <div className="shrink-0">
                 {user?.profilePictureLink ? (
                   <img
-                    alt=""
+                    alt="Photo de profil de votre compte"
                     src={user!.profilePictureLink}
-                    className="size-10 rounded-full"
+                    className="size-10 rounded-full object-cover"
                   />
                 ) : (
                   <UserCircleIcon

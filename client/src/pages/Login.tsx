@@ -9,7 +9,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { getUser, isAuthenticated } = useUser();
+  const { getMe, isAuthenticated } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function Login() {
         body: JSON.stringify({ email, password }),
       });
 
-      await getUser();
+      await getMe();
 
       navigate("/post");
     } catch (error) {

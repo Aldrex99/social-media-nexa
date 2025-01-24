@@ -1,11 +1,16 @@
 import UserModel, { IUser } from "../models/user.model";
 
-export const getUser = async (id: string) => {
+export const getMe = async (id: string) => {
   try {
     const user = await UserModel.findOne(
       { _id: id },
       { password: 0, reset_password_token: 0 }
     );
+
+    if (user && !user.profilePictureLink) {
+      user.profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`;
+    }
+
     return user;
   } catch (error) {
     throw error;

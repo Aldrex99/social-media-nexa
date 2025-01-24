@@ -80,7 +80,7 @@ export default function TodoCard({
           <img
             alt=""
             src={todo.imageLink}
-            className="mx-auto size-24 shrink-0"
+            className="mx-auto size-24 shrink-0 object-cover"
           />
         ) : (
           <PhotoIcon className="mx-auto h-24 w-24 text-gray-300" />

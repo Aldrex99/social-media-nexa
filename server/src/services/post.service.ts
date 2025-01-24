@@ -48,7 +48,9 @@ export const getPosts = async (limit: number, page: number) => {
         typeof post.user_id === "object"
           ? {
               username: post.user_id.username,
-              profilePictureLink: post.user_id.profilePictureLink,
+              profilePictureLink:
+                post.user_id.profilePictureLink ??
+                `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`,
             }
           : { username: "", profilePictureLink: "" },
       user_id:

@@ -38,7 +38,7 @@ export default function PostCard({ post, posts, setPosts }: TPostCardProps) {
             <img
               src={post.user.profilePictureLink}
               alt={post.user.username}
-              className="size-10 rounded-full"
+              className="size-10 rounded-full object-cover"
             />
             <Link to={`/profile/${post.user_id}`} className="font-semibold">
               {post.user.username}

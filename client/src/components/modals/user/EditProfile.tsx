@@ -12,7 +12,7 @@ type TEditProfileProps = {
 };
 
 export default function EditProfile({ open, setOpen }: TEditProfileProps) {
-  const { user, getUser } = useUser();
+  const { user, getMe } = useUser();
   const [username, setUsername] = useState(user?.username ?? "");
   const [email, setEmail] = useState(user?.email ?? "");
 
@@ -24,7 +24,7 @@ export default function EditProfile({ open, setOpen }: TEditProfileProps) {
         body: JSON.stringify({ username, email }),
       });
 
-      await getUser();
+      await getMe();
       setOpen(false);
     } catch (error) {
       console.error((error as Error).message ?? "Une erreur s'est produite");

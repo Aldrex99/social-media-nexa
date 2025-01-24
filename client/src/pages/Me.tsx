@@ -37,7 +37,7 @@ export default function Me() {
               <img
                 src={user?.profilePictureLink}
                 alt="Photo de profil de votre compte"
-                className="size-36 rounded-full"
+                className="size-36 rounded-full object-cover"
               />
               <div className="absolute z-10 flex size-36 items-center justify-center rounded-full bg-black bg-opacity-50 font-semibold text-white opacity-0 hover:opacity-100">
                 <p>Modifier</p>

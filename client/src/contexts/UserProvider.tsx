@@ -9,10 +9,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [userIsLoaded, setUserIsLoaded] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const getUser = async (reloadGet = false) => {
+  const getMe = async (reloadGet = false) => {
     setUserIsLoaded(false);
     try {
-      const response = await fetcher("/user");
+      const response = await fetcher("/user/me");
 
       if (response) {
         const data: IUser = {
@@ -50,14 +50,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    getUser();
+    getMe();
   }, []);
 
   const value: IUserContextValue = {
     user,
     userIsLoaded,
     isAuthenticated,
-    getUser,
+    getMe,
     logout,
   };
 

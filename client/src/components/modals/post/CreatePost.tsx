@@ -138,7 +138,7 @@ export default function CreatePostModal({
               <img
                 src={imageLink}
                 alt="Post"
-                className="h-80 w-80 rounded-md object-cover"
+                className="h-80 w-80 rounded-md"
               />
             )}
           </div>

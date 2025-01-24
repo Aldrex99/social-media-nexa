@@ -5,7 +5,7 @@ interface IUserContextValue {
   user: IUser | null;
   userIsLoaded?: boolean;
   isAuthenticated: boolean;
-  getUser: () => Promise<void>;
+  getMe: () => Promise<void>;
   logout: () => Promise<boolean>;
 }
 
