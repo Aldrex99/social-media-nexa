@@ -23,7 +23,7 @@ export const errorHandler = (
   };
 
   logger.error(
-    `Error: ${response.message}, Status: ${status}, Path: ${req.path}, Operational: ${err.isOperational}`
+    `${response.message} | [${req.method} ${req.path}] | Status: ${status}`
   );
 
   res.status(status).json(response);

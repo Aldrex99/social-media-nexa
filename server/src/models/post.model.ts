@@ -18,7 +18,7 @@ export interface IPost {
 export interface IPostDocument extends IPost, Document {}
 
 export const PostSchema = new Schema<IPostDocument>({
-  user_id: { type: Schema.Types.String, ref: "User" },
+  user_id: { type: Schema.Types.ObjectId, ref: "User" },
   content: { type: String, required: true },
   imageLink: { type: String },
   created_at: { type: Date, default: Date.now },
