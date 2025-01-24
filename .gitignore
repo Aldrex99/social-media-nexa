@@ -29,3 +29,5 @@ build/
 *.ntvs*
 *.njsproj
 *.sln
+
+server/public/uploads/

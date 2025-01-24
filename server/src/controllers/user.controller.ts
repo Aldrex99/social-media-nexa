@@ -15,6 +15,23 @@ export const getUser = async (req: Request, res: Response) => {
   }
 };
 
+export const uploadAvatar = async (req: Request, res: Response) => {
+  try {
+    const fileName = req.fileName ?? "";
+
+    const profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/${fileName}`;
+
+    await userService.uploadAvatar(req.user?.id ?? "", profilePictureLink);
+
+    res.status(200).json({ link: profilePictureLink });
+  } catch (error) {
+    console.error("Error uploading avatar:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while uploading the avatar." });
+  }
+};
+
 export const updateUser = async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -23,11 +40,10 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 
   try {
-    const { email, password } = req.body;
+    const { email } = req.body;
 
     const updatedUser = await userService.updateUser(req.user?.id ?? "", {
       email,
-      password,
     });
 
     res.status(200).json(updatedUser);

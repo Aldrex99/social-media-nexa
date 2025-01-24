@@ -5,6 +5,7 @@ import UserRouteWrapper from "@utils/UserRouteWrapper";
 
 import Login from "@pages/Login";
 import Register from "@pages/Register";
+import Me from "@pages/Me";
 import Todo from "@pages/Todo";
 import Post from "@pages/Post";
 import NotFound from "@pages/NotFound";
@@ -22,6 +23,10 @@ function App() {
               <Route path="/register" element={<Register />} />
             </Route>
             <Route element={<PrivateRoute acceptedRole={["user"]} />}>
+              <Route
+                path="/me"
+                element={<UserRouteWrapper children={<Me />} />}
+              />
               <Route
                 path="/post"
                 element={<UserRouteWrapper children={<Post />} />}

@@ -38,7 +38,7 @@ export default function Post() {
           setPosts={setPosts}
         />
       )}
-      <div className="flex min-h-screen flex-col">
+      <div className="flex flex-col">
         <div className="flex items-center p-2">
           <h1 className="flex-1 py-2 pl-2 text-2xl font-semibold text-blue-500">
             Posts de la communauté

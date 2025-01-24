@@ -23,6 +23,9 @@ app.use("/api/user", checkAccessToken, userRouter);
 app.use("/api/todos", checkAccessToken, todosRouter);
 app.use("/api/posts", checkAccessToken, postsRouter);
 
+/* Route for public files */
+app.use("/public/uploads", checkAccessToken, express.static("public/uploads"));
+
 app.use("*", (req, res) => {
   res.status(404).json("Not Found");
 });

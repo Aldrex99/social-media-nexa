@@ -23,8 +23,8 @@ const navigation = [
   { name: "Todo-list", to: "/todo-list", current: false },
 ];
 const userNavigation = [
-  { name: "Your Profile", to: "/profile" },
-  { name: "Sign out", to: "/logout" },
+  { name: "Votre profil", to: "/me" },
+  { name: "Déconnexion", to: "/logout" },
 ];
 
 export default function UserLayout({

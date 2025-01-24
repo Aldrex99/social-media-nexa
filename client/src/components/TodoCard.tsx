@@ -62,7 +62,8 @@ export default function TodoCard({
       <Button
         type="button"
         onClick={handleDone}
-        className="absolute right-2 top-2 px-0 py-0"
+        className="absolute right-2 top-2"
+        defaultPadding={false}
         title={
           todo.done ? "Marquer comme non terminé" : "Marquer comme terminé"
         }

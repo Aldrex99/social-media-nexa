@@ -6,7 +6,8 @@ import cors from "./cors.middleware";
 const middlewares = [
   logger("dev"), // Logs requests to the console
   express.json(), // Parses JSON requests
-  express.urlencoded({ extended: false }), // Parses URL encoded requests
+  express.urlencoded({ extended: true }), // Parses URL encoded requests
+  express.static("public"), // Serves static files
   cookieParser(), // Parses cookies
   cors.handle, // Handles CORS requests
 ];

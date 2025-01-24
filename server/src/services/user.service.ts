@@ -12,6 +12,19 @@ export const getUser = async (id: string) => {
   }
 };
 
+export const uploadAvatar = async (id: string, profilePictureLink: string) => {
+  try {
+    const updatedUser = await UserModel.findOneAndUpdate(
+      { _id: id },
+      { profilePictureLink, updated_at: new Date() },
+      { new: true }
+    );
+    return;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const updateUser = async (id: string, data: Partial<IUser>) => {
   try {
     data.updated_at = new Date();
