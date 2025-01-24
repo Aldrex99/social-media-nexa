@@ -1,4 +1,4 @@
-import TodoModel, { ITodo } from "../models/todo.model";
+import TodoModel, { ITodo } from "@models/todo.model";
 
 export const getTodos = async (user_id: string) => {
   try {

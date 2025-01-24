@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { upload } from "../middlewares/file.middleware";
-import * as userValidator from "../validators/user.validator";
-import * as userController from "../controllers/user.controller";
+import { upload } from "@middlewares/file.middleware";
+import * as userValidator from "@validators/user.validator";
+import * as userController from "@controllers/user.controller";
 
 const router = Router();
 

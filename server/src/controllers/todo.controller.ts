@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import * as TodoService from "../services/todo.service";
+import * as TodoService from "@services/todo.service";
 import { validationResult } from "express-validator";
-import { validationErrorsUtil } from "../utils/validatorError.util";
+import { validationErrorsUtil } from "@utils/validatorError.util";
 
 interface IReturnableTodo {
   id: string;

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import * as PostService from "../services/post.service";
+import * as PostService from "@services/post.service";
 import { validationResult } from "express-validator";
-import { validationErrorsUtil } from "../utils/validatorError.util";
+import { validationErrorsUtil } from "@utils/validatorError.util";
 
 export const createPost = async (req: Request, res: Response) => {
   const errors = validationResult(req);

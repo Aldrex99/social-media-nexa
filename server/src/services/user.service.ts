@@ -1,4 +1,4 @@
-import UserModel, { IUser } from "../models/user.model";
+import UserModel, { IUser } from "@models/user.model";
 
 export const getMe = async (id: string) => {
   try {

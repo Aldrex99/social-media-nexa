@@ -1,5 +1,5 @@
 import { Request, NextFunction, Response } from "express";
-import { verifyAccessToken, verifyRefreshToken } from "../utils/token.util";
+import { verifyAccessToken, verifyRefreshToken } from "@utils/token.util";
 
 export const checkAccessToken = async (
   req: Request,

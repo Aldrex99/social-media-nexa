@@ -1,7 +1,7 @@
-import * as userService from "../services/user.service";
+import * as userService from "@services/user.service";
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { validationErrorsUtil } from "../utils/validatorError.util";
+import { validationErrorsUtil } from "@utils/validatorError.util";
 
 export const getMe = async (req: Request, res: Response) => {
   try {

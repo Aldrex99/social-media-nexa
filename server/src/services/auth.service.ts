@@ -1,5 +1,5 @@
-import UserModel, { IUser } from "../models/user.model";
-import { checkPassword, hashPassword } from "../utils/password.util";
+import UserModel, { IUser } from "@models/user.model";
+import { checkPassword, hashPassword } from "@utils/password.util";
 import { randomUUID } from "crypto";
 
 export const register = async (data: Partial<IUser>) => {

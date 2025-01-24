@@ -4,12 +4,12 @@
 
 /* Importing modules */
 import express, { Application } from "express";
-import { checkAccessToken } from "./middlewares/token.middleware";
-import applyMiddlewares from "./middlewares/index.middleware";
-import authRouter from "./routes/auth.route";
-import userRouter from "./routes/user.route";
-import todosRouter from "./routes/todo.route";
-import postsRouter from "./routes/post.route";
+import { checkAccessToken } from "@middlewares/token.middleware";
+import applyMiddlewares from "@middlewares/index.middleware";
+import authRouter from "@routes/auth.route";
+import userRouter from "@routes/user.route";
+import todosRouter from "@routes/todo.route";
+import postsRouter from "@routes/post.route";
 
 /* Creating the application */
 const app: Application = express();

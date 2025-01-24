@@ -1,6 +1,6 @@
 import { Router } from "express";
-import * as postController from "../controllers/post.controller";
-import * as postValidator from "../validators/post.validator";
+import * as postController from "@controllers/post.controller";
+import * as postValidator from "@validators/post.validator";
 
 const router = Router();
 

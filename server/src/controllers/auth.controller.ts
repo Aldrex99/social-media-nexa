@@ -1,8 +1,8 @@
-import * as authService from "../services/auth.service";
-import { generateAccessToken, generateRefreshToken } from "../utils/token.util";
+import * as authService from "@services/auth.service";
+import { generateAccessToken, generateRefreshToken } from "@utils/token.util";
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { validationErrorsUtil } from "../utils/validatorError.util";
+import { validationErrorsUtil } from "@utils/validatorError.util";
 
 export const register = async (req: Request, res: Response) => {
   const errors = validationResult(req);

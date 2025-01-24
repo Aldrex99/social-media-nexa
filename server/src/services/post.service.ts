@@ -1,4 +1,4 @@
-import PostModel, { IPost } from "../models/post.model";
+import PostModel, { IPost } from "@models/post.model";
 
 export const createPost = async (data: Partial<IPost>) => {
   try {
