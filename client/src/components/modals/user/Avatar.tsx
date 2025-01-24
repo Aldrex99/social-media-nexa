@@ -53,57 +53,55 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
 
   return (
     <BaseModal open={open} setOpen={setOpen}>
-      <div>
-        <div className="flex flex-col space-y-6">
-          <DialogTitle
-            as="h3"
-            className="text-center text-base font-semibold text-gray-900"
-          >
-            Créer une tâche
-          </DialogTitle>
-          <div className="flex flex-col space-y-4">
-            <div className="flex w-full items-center justify-center">
-              <label
-                htmlFor="dropzone-file"
-                className="flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 hover:bg-gray-100"
-              >
-                {selectedFile ? (
-                  <p className="flex flex-col text-center text-lg text-gray-500">
-                    Mettre comme photo de profil :{" "}
-                    <span className="font-semibold">{selectedFile?.name}</span>
+      <div className="flex flex-col space-y-6">
+        <DialogTitle
+          as="h3"
+          className="text-center text-base font-semibold text-gray-900"
+        >
+          Créer une tâche
+        </DialogTitle>
+        <div className="flex flex-col space-y-4">
+          <div className="flex w-full items-center justify-center">
+            <label
+              htmlFor="dropzone-file"
+              className="flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 hover:bg-gray-100"
+            >
+              {selectedFile ? (
+                <p className="flex flex-col text-center text-lg text-gray-500">
+                  Mettre comme photo de profil :{" "}
+                  <span className="font-semibold">{selectedFile?.name}</span>
+                </p>
+              ) : (
+                <div className="flex flex-col items-center justify-center pb-6 pt-5">
+                  <CloudArrowUpIcon className="h-8 w-8 text-gray-500" />
+                  <p className="mb-2 text-sm text-gray-500">
+                    <span className="font-semibold">
+                      Cliquez pour télécharger
+                    </span>{" "}
+                    ou glisser-déposer
                   </p>
-                ) : (
-                  <div className="flex flex-col items-center justify-center pb-6 pt-5">
-                    <CloudArrowUpIcon className="h-8 w-8 text-gray-500" />
-                    <p className="mb-2 text-sm text-gray-500">
-                      <span className="font-semibold">
-                        Cliquez pour télécharger
-                      </span>{" "}
-                      ou glisser-déposer
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      Accepte les fichiers de type image
-                    </p>
-                  </div>
-                )}
-                <input
-                  id="dropzone-file"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleFileChange}
-                />
-              </label>
-            </div>
-            {uploadStatus && <p>{uploadStatus}</p>}
-            {fileUrl && (
-              <img
-                src={fileUrl}
-                alt="Photo de profil de votre compte"
-                className="size-36 rounded-full"
+                  <p className="text-xs text-gray-500">
+                    Accepte les fichiers de type image
+                  </p>
+                </div>
+              )}
+              <input
+                id="dropzone-file"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleFileChange}
               />
-            )}
+            </label>
           </div>
+          {uploadStatus && <p>{uploadStatus}</p>}
+          {fileUrl && (
+            <img
+              src={fileUrl}
+              alt="Photo de profil de votre compte"
+              className="size-36 rounded-full"
+            />
+          )}
         </div>
       </div>
       <div className="flex flex-col items-center justify-center space-y-4">
