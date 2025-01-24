@@ -1,7 +1,9 @@
 import { Document, Model, model, Schema } from "mongoose";
 
 export interface IPost {
-  user_id: string;
+  user_id:
+    | string
+    | { _id?: string; username?: string; profilePictureLink?: string };
   content: string;
   imageLink?: string;
   created_at: Date;

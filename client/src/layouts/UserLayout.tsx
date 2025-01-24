@@ -102,10 +102,10 @@ export default function UserLayout({
                     <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Ouvre le menu utilisateur</span>
-                      {user?.avatar ? (
+                      {user?.profilePictureLink ? (
                         <img
                           alt="Photo de profil de votre compte"
-                          src={user!.avatar}
+                          src={user!.profilePictureLink}
                           className="size-8 rounded-full"
                         />
                       ) : (
@@ -159,10 +159,10 @@ export default function UserLayout({
           <div className="border-t border-gray-700 pb-3 pt-4">
             <div className="flex items-center px-5 sm:px-6">
               <div className="shrink-0">
-                {user?.avatar ? (
+                {user?.profilePictureLink ? (
                   <img
                     alt=""
-                    src={user!.avatar}
+                    src={user!.profilePictureLink}
                     className="size-10 rounded-full"
                   />
                 ) : (

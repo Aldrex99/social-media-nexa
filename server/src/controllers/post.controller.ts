@@ -18,12 +18,13 @@ export const createPost = async (req: Request, res: Response) => {
       return;
     }
 
-    await PostService.createPost({
+    const newPost = await PostService.createPost({
       user_id: req.user.id,
       content,
       imageLink,
     });
-    res.status(201).json({ message: "Post created" });
+
+    res.status(201).json(newPost);
   } catch (error) {
     console.error("Error creating Todo:", error);
     res
@@ -113,6 +114,8 @@ export const deletePost = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     await PostService.deletePost(id, req.user?.id ?? "");
+
+    res.status(200).json({ message: "Post deleted" });
   } catch (error) {
     console.error("Error deleting Post:", error);
     res

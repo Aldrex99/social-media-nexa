@@ -4,6 +4,8 @@ export const createPost = async (data: Partial<IPost>) => {
   try {
     const post = new PostModel(data);
     await post.save();
+
+    return post;
   } catch (error) {
     throw error;
   }
@@ -28,14 +30,32 @@ export const getPost = async (id: string) => {
 export const getPosts = async (limit: number, page: number) => {
   try {
     const posts = await PostModel.find(
-      { is_deleted: false, is_archived: false },
+      { is_deleted: false },
       { __v: 0, is_deleted: 0, deleted_at: 0 }
     )
       .sort({ created_at: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
 
-    return posts;
+    await PostModel.populate(posts, {
+      path: "user_id",
+      select: "username profilePictureLink _id",
+    });
+
+    const transformedPosts = posts.map((post) => ({
+      ...post.toObject(),
+      user:
+        typeof post.user_id === "object"
+          ? {
+              username: post.user_id.username,
+              profilePictureLink: post.user_id.profilePictureLink,
+            }
+          : { username: "", profilePictureLink: "" },
+      user_id:
+        typeof post.user_id === "object" ? post.user_id._id : post.user_id,
+    }));
+
+    return transformedPosts;
   } catch (error) {
     throw error;
   }

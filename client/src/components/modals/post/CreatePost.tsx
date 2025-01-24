@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useUser } from "@hooks/useUser";
 import { fetcher } from "@utils/fetch";
 import { DialogTitle } from "@headlessui/react";
 import {
@@ -9,23 +10,28 @@ import {
 import BaseModal from "@components/modals/BaseModal";
 import TextInput from "@components/inputs/TextInput";
 import Button from "@components/buttons/Button";
+import { IPost } from "@/types/post";
 
 type TCreatePostModalProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
+  posts: IPost[];
+  setPosts: (posts: IPost[]) => void;
 };
 
 export default function CreatePostModal({
   open,
   setOpen,
+  posts,
+  setPosts,
 }: TCreatePostModalProps) {
   const [content, setContent] = useState("");
-  const [showImageLinkInput, setShowImageLinkInput] = useState(true);
-  const [imageLink, setImageLink] = useState<string | null>(
-    "https://cdn.futura-sciences.com/cdn-cgi/image/width=1920,quality=50,format=auto/sources/images/AI-creation.jpg",
-  );
+  const [showImageLinkInput, setShowImageLinkInput] = useState(false);
+  const [imageLink, setImageLink] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const { user } = useUser();
 
   const handleDeleteImageLink = () => {
     setImageLink("");
@@ -41,13 +47,28 @@ export default function CreatePostModal({
     }
 
     try {
-      await fetcher("/posts", {
+      const newPost: IPost = await fetcher("/posts", {
         method: "POST",
         body: JSON.stringify({
           content,
           imageLink: imageLink ?? "",
         }),
       });
+
+      newPost.user = {
+        username: user?.username ?? "",
+        profilePictureLink: user?.profilePictureLink ?? "",
+      };
+
+      const orderPostsByCreationDate = [newPost, ...posts];
+
+      orderPostsByCreationDate.sort((a, b) => {
+        if (a.created_at < b.created_at) return 1;
+        if (a.created_at > b.created_at) return -1;
+        return 0;
+      });
+
+      setPosts(orderPostsByCreationDate);
 
       setContent("");
       setImageLink(null);

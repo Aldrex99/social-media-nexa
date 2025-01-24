@@ -1,7 +1,8 @@
 // UserProvider.tsx
 import React, { useState, useEffect } from "react";
 import { fetcher } from "@utils/fetch";
-import { UserContext, IUser, IUserContextValue } from "@contexts/UserContext";
+import { UserContext, IUserContextValue } from "@contexts/UserContext";
+import { IUser } from "@/types/user";
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
@@ -15,11 +16,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (response) {
         const data: IUser = {
-          id: response.id,
+          id: response._id,
           email: response.email,
           username: response.username,
           role: response.role,
-          avatar: response.avatar,
+          profilePictureLink: response.profilePictureLink,
         };
         setUser(data);
       }

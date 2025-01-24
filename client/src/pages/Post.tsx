@@ -1,19 +1,42 @@
 import { useEffect, useState } from "react";
-import CreatePostModal from "@/components/modals/post/CreatePostModal";
+import CreatePostModal from "@/components/modals/post/CreatePost";
 import PostList from "@/components/PostList";
 import Button from "@/components/buttons/Button";
+import { IPost } from "@/types/post";
+import { fetcher } from "@/utils/fetch";
 
 export default function Post() {
-  const [showCreateModal, setShowCreateModal] = useState(true);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [posts, setPosts] = useState<IPost[]>([]);
 
   useEffect(() => {
-    document.title = "Social Nexa | Post";
+    document.title = "Social Nexa | Posts";
+  }, []);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const data = await fetcher("/posts", {
+          method: "GET",
+        });
+        setPosts(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchPosts();
   }, []);
 
   return (
     <>
       {showCreateModal && (
-        <CreatePostModal open={showCreateModal} setOpen={setShowCreateModal} />
+        <CreatePostModal
+          open={showCreateModal}
+          setOpen={setShowCreateModal}
+          posts={posts}
+          setPosts={setPosts}
+        />
       )}
       <div className="flex min-h-screen flex-col">
         <div className="flex items-center p-2">
@@ -24,7 +47,7 @@ export default function Post() {
             Nouveau post
           </Button>
         </div>
-        <PostList />
+        <PostList posts={posts} setPosts={setPosts} />
       </div>
     </>
   );
