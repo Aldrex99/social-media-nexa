@@ -1,10 +1,15 @@
 import * as authService from "@services/auth.service";
+import { CustomError } from "@/utils/customError.util";
 import { generateAccessToken, generateRefreshToken } from "@utils/token.util";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { validationErrorsUtil } from "@utils/validatorError.util";
 
-export const register = async (req: Request, res: Response) => {
+export const register = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     await validationErrorsUtil(errors, res);
@@ -17,14 +22,26 @@ export const register = async (req: Request, res: Response) => {
     await authService.register({ email, username, password });
     res.status(201).json({ message: "User registered" });
   } catch (error) {
-    console.error("Error registering user:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while registering user." });
+    if ((error as CustomError).status === 409) {
+      next(
+        new CustomError(
+          (error as CustomError).message,
+          409,
+          "DUPLICATE_USER_KEY"
+        )
+      );
+      return;
+    }
+
+    next(new CustomError((error as Error).message, 500, "REGISTER_ERROR"));
   }
 };
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     await validationErrorsUtil(errors, res);
@@ -52,12 +69,25 @@ export const login = async (req: Request, res: Response) => {
 
     res.status(200).json(user);
   } catch (error) {
-    console.error("Error logging in:", error);
-    res.status(500).json({ message: "An error occurred while logging in." });
+    if ((error as CustomError).status === 401) {
+      next(
+        new CustomError(
+          (error as CustomError).message,
+          401,
+          "INVALID_CREDENTIALS"
+        )
+      );
+      return;
+    }
+    next(new CustomError((error as Error).message, 500, "LOGIN_ERROR"));
   }
 };
 
-export const forgotPassword = async (req: Request, res: Response) => {
+export const forgotPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     await validationErrorsUtil(errors, res);
@@ -73,16 +103,18 @@ export const forgotPassword = async (req: Request, res: Response) => {
 
     res.status(200);
   } catch (error) {
-    console.error("Error forgot password:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while forgot password system." });
+    // TODO: Handle error
+
+    next(
+      new CustomError((error as Error).message, 500, "FORGOT_PASSWORD_ERROR")
+    );
   }
 };
 
 export const newAccessTokenFromRefreshToken = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
   try {
     if (!req.user?.id) {
@@ -101,20 +133,22 @@ export const newAccessTokenFromRefreshToken = async (
     res.status(200);
     res.end();
   } catch (error) {
-    console.error("Error getting new access token:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while getting new access token." });
+    next(
+      new CustomError((error as Error).message, 500, "NEW_ACCESS_TOKEN_ERROR")
+    );
   }
 };
 
-export const logout = async (req: Request, res: Response) => {
+export const logout = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
     res.status(200).json({ message: "Logged out" });
   } catch (error) {
-    console.error("Error logging out:", error);
-    res.status(500).json({ message: "An error occurred while logging out." });
+    next(new CustomError((error as Error).message, 500, "LOGOUT_ERROR"));
   }
 };

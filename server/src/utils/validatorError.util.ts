@@ -6,7 +6,7 @@ export const validationErrorsUtil = async (
   res: Response
 ) => {
   return res.status(422).json({
-    code: 422,
+    code: "VALIDATION_ERROR",
     message: "Les données envoyées sont incorrectes",
     errors: errors.array(),
   });

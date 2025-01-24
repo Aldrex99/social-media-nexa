@@ -1,3 +1,4 @@
+import { CustomError } from "@/utils/customError.util";
 import UserModel, { IUser } from "@models/user.model";
 
 export const getMe = async (id: string) => {
@@ -12,7 +13,14 @@ export const getMe = async (id: string) => {
     }
 
     return user;
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 11000) {
+      throw new CustomError(
+        "L'adresse email ou le nom d'utilisateur est déjà utilisé",
+        409
+      );
+    }
+
     throw error;
   }
 };

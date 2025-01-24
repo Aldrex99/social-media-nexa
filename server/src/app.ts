@@ -4,12 +4,14 @@
 
 /* Importing modules */
 import express, { Application } from "express";
-import { checkAccessToken } from "@middlewares/token.middleware";
 import applyMiddlewares from "@middlewares/index.middleware";
+import { checkAccessToken } from "@middlewares/token.middleware";
+import { errorHandler } from "@middlewares/errorHandler.middleware";
 import authRouter from "@routes/auth.route";
 import userRouter from "@routes/user.route";
 import todosRouter from "@routes/todo.route";
 import postsRouter from "@routes/post.route";
+import { CustomError } from "@utils/customError.util";
 
 /* Creating the application */
 const app: Application = express();
@@ -28,8 +30,10 @@ app.use("/public", checkAccessToken, express.static("public"));
 app.use("/public/uploads", checkAccessToken, express.static("public/uploads"));
 
 app.use("*", (req, res) => {
-  res.status(404).json("Not Found");
+  throw new CustomError("Route not found", 404, "NOT_FOUND", true, null);
 });
+
+app.use(errorHandler);
 
 /* Exporting the application */
 export default app;

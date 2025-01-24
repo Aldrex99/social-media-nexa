@@ -1,3 +1,4 @@
+import { CustomError } from "@/utils/customError.util";
 import UserModel, { IUser } from "@models/user.model";
 import { checkPassword, hashPassword } from "@utils/password.util";
 import { randomUUID } from "crypto";
@@ -10,7 +11,14 @@ export const register = async (data: Partial<IUser>) => {
     const user = new UserModel(data);
     await user.save();
     return;
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 11000) {
+      throw new CustomError(
+        "L'adresse email ou le nom d'utilisateur est déjà utilisé",
+        409
+      );
+    }
+
     throw error;
   }
 };
@@ -19,12 +27,20 @@ export const login = async (email: string, password: string) => {
   try {
     const user = await UserModel.findOne({ email });
     if (!user) {
-      throw new Error("User not found");
+      throw new CustomError(
+        "L'email ou le mot de passe est incorrect",
+        401,
+        "INVALID_CREDENTIALS"
+      );
     }
 
     const isMatch = await checkPassword(password, user.password as string);
     if (!isMatch) {
-      throw new Error("Invalid password");
+      throw new CustomError(
+        "L'email ou le mot de passe est incorrect",
+        401,
+        "INVALID_CREDENTIALS"
+      );
     }
 
     user.password = undefined;
@@ -40,7 +56,7 @@ export const forgotPassword = async (email: string) => {
   try {
     const user = await UserModel.findOne({ email });
     if (!user) {
-      throw new Error("User not found");
+      throw new CustomError("Aucun utilisateur trouvé avec cet email", 404);
     }
 
     // Generate reset password token

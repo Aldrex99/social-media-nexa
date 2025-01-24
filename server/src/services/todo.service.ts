@@ -67,6 +67,6 @@ export const deleteTodo = async (id: string, user_id: string) => {
       }
     );
   } catch (error) {
-    throw new Error("Error deleting Todo");
+    throw error;
   }
 };

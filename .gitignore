@@ -30,4 +30,8 @@ build/
 *.njsproj
 *.sln
 
+# Server files
 server/public/uploads/
+
+# Logs
+logs/

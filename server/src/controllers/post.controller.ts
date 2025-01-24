@@ -1,9 +1,14 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import { CustomError } from "@/utils/customError.util";
 import * as PostService from "@services/post.service";
 import { validationResult } from "express-validator";
 import { validationErrorsUtil } from "@utils/validatorError.util";
 
-export const createPost = async (req: Request, res: Response) => {
+export const createPost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     await validationErrorsUtil(errors, res);
@@ -13,27 +18,23 @@ export const createPost = async (req: Request, res: Response) => {
   try {
     const { content, imageLink } = req.body;
 
-    if (req.user?.id === undefined) {
-      res.status(401).json({ message: "Unauthorized" });
-      return;
-    }
-
     const newPost = await PostService.createPost({
-      user_id: req.user.id,
+      user_id: req.user!.id,
       content,
       imageLink,
     });
 
     res.status(201).json(newPost);
   } catch (error) {
-    console.error("Error creating Todo:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while creating the Todo." });
+    next(new CustomError((error as Error).message, 500, "POST_CREATE_ERROR"));
   }
 };
 
-export const getPost = async (req: Request, res: Response) => {
+export const getPost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     await validationErrorsUtil(errors, res);
@@ -46,20 +47,21 @@ export const getPost = async (req: Request, res: Response) => {
     const post = await PostService.getPost(id);
 
     if (!post) {
-      res.status(404).json({ message: "Post not found" });
+      next(new CustomError("Post not found", 404, "POST_NOT_FOUND_ERROR"));
       return;
     }
 
     res.status(200).json(post);
   } catch (error) {
-    console.error("Error getting Post:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while getting the Post." });
+    next(new CustomError((error as Error).message, 500, "POST_GET_ERROR"));
   }
 };
 
-export const getPosts = async (req: Request, res: Response) => {
+export const getPosts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { limit, page } = req.query;
 
@@ -70,14 +72,15 @@ export const getPosts = async (req: Request, res: Response) => {
 
     res.status(200).json(posts);
   } catch (error) {
-    console.error("Error getting Posts:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while getting the Posts." });
+    next(new CustomError((error as Error).message, 500, "POSTS_GET_ERROR"));
   }
 };
 
-export const getPostsByUser = async (req: Request, res: Response) => {
+export const getPostsByUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     await validationErrorsUtil(errors, res);
@@ -96,14 +99,15 @@ export const getPostsByUser = async (req: Request, res: Response) => {
 
     res.status(200).json(posts);
   } catch (error) {
-    console.error("Error getting Posts by User:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while getting the Posts by User." });
+    next(new CustomError((error as Error).message, 500, "POSTS_GET_ERROR"));
   }
 };
 
-export const deletePost = async (req: Request, res: Response) => {
+export const deletePost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     await validationErrorsUtil(errors, res);
@@ -117,9 +121,6 @@ export const deletePost = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: "Post deleted" });
   } catch (error) {
-    console.error("Error deleting Post:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while deleting the Post." });
+    next(new CustomError((error as Error).message, 500, "POST_DELETE_ERROR"));
   }
 };

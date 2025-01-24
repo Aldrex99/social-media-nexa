@@ -1,21 +1,33 @@
 import * as userService from "@services/user.service";
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import { CustomError } from "@/utils/customError.util";
 import { validationResult } from "express-validator";
 import { validationErrorsUtil } from "@utils/validatorError.util";
 
-export const getMe = async (req: Request, res: Response) => {
+export const getMe = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const user = await userService.getMe(req.user?.id ?? "");
     res.status(200).json(user);
   } catch (error) {
-    console.error("Error getting user:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while getting the user." });
+    next(
+      new CustomError(
+        "An error occurred while fetching the user.",
+        500,
+        "GET_ME_ERROR"
+      )
+    );
   }
 };
 
-export const uploadAvatar = async (req: Request, res: Response) => {
+export const uploadAvatar = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const fileName = req.fileName ?? "";
 
@@ -25,14 +37,21 @@ export const uploadAvatar = async (req: Request, res: Response) => {
 
     res.status(200).json({ link: profilePictureLink });
   } catch (error) {
-    console.error("Error uploading avatar:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while uploading the avatar." });
+    next(
+      new CustomError(
+        "An error occurred while uploading the avatar.",
+        500,
+        "UPLOAD_AVATAR_ERROR"
+      )
+    );
   }
 };
 
-export const updateUser = async (req: Request, res: Response) => {
+export const updateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     await validationErrorsUtil(errors, res);
@@ -49,21 +68,31 @@ export const updateUser = async (req: Request, res: Response) => {
 
     res.status(200).json(updatedUser);
   } catch (error) {
-    console.error("Error updating user:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while updating the user." });
+    next(
+      new CustomError(
+        "An error occurred while updating the user.",
+        500,
+        "UPDATE_USER_ERROR"
+      )
+    );
   }
 };
 
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     await userService.deleteUser(req.user?.id ?? "");
     res.status(204).json();
   } catch (error) {
-    console.error("Error deleting user:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while deleting the user." });
+    next(
+      new CustomError(
+        "An error occurred while deleting the user.",
+        500,
+        "DELETE_USER_ERROR"
+      )
+    );
   }
 };

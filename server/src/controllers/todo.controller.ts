@@ -1,4 +1,5 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import { CustomError } from "@utils/customError.util";
 import * as TodoService from "@services/todo.service";
 import { validationResult } from "express-validator";
 import { validationErrorsUtil } from "@utils/validatorError.util";
@@ -25,48 +26,11 @@ function sanitizeTodoData(todo: any): IReturnableTodo {
   };
 }
 
-export const getTodos = async (req: Request, res: Response) => {
-  try {
-    const todos = await TodoService.getTodos(req.user?.id ?? "");
-
-    const sanitizedTodos = todos.map((todo) => sanitizeTodoData(todo));
-
-    res.status(200).json(sanitizedTodos);
-  } catch (error) {
-    console.error("Error getting Todos:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while getting the Todos." });
-  }
-};
-
-export const getTodo = async (req: Request, res: Response) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    await validationErrorsUtil(errors, res);
-    return;
-  }
-
-  try {
-    const { id } = req.params;
-
-    const todo = await TodoService.getTodo(id, req.user?.id ?? "");
-
-    if (!todo) {
-      res.status(404).json({ message: "Todo not found" });
-      return;
-    }
-
-    res.status(200).json(todo);
-  } catch (error) {
-    console.error("Error getting Todo:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while getting the Todo." });
-  }
-};
-
-export const createTodo = async (req: Request, res: Response) => {
+export const createTodo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     await validationErrorsUtil(errors, res);
@@ -88,14 +52,58 @@ export const createTodo = async (req: Request, res: Response) => {
 
     res.status(201).json(sanitizedTodo);
   } catch (error) {
-    console.error("Error creating Todo:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while creating the Todo." });
+    next(new CustomError((error as Error).message, 500, "TODO_CREATE_ERROR"));
   }
 };
 
-export const updateTodo = async (req: Request, res: Response) => {
+export const getTodo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    await validationErrorsUtil(errors, res);
+    return;
+  }
+
+  try {
+    const { id } = req.params;
+
+    const todo = await TodoService.getTodo(id, req.user?.id ?? "");
+
+    if (!todo) {
+      next(new CustomError("Todo not found", 404, "TODO_NOT_FOUND_ERROR"));
+      return;
+    }
+
+    res.status(200).json(todo);
+  } catch (error) {
+    next(new CustomError((error as Error).message, 500, "TODO_GET_ERROR"));
+  }
+};
+
+export const getTodos = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const todos = await TodoService.getTodos(req.user?.id ?? "");
+
+    const sanitizedTodos = todos.map((todo) => sanitizeTodoData(todo));
+
+    res.status(200).json(sanitizedTodos);
+  } catch (error) {
+    next(new CustomError((error as Error).message, 500, "TODOS_GET_ERROR"));
+  }
+};
+
+export const updateTodo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     await validationErrorsUtil(errors, res);
@@ -117,14 +125,15 @@ export const updateTodo = async (req: Request, res: Response) => {
 
     res.status(200).json(sanitizedTodo);
   } catch (error) {
-    console.error("Error updating Todo:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while updating the Todo." });
+    next(new CustomError((error as Error).message, 500, "TODO_UPDATE_ERROR"));
   }
 };
 
-export const deleteTodo = async (req: Request, res: Response) => {
+export const deleteTodo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     await validationErrorsUtil(errors, res);
@@ -138,9 +147,6 @@ export const deleteTodo = async (req: Request, res: Response) => {
 
     res.status(204).send();
   } catch (error) {
-    console.error("Error deleting Todo:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while deleting the Todo." });
+    next(new CustomError((error as Error).message, 500, "TODO_DELETE_ERROR"));
   }
 };

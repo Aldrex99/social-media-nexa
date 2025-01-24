@@ -1,3 +1,4 @@
+import { CustomError } from "@/utils/customError.util";
 import PostModel, { IPost } from "@models/post.model";
 
 export const createPost = async (data: Partial<IPost>) => {
@@ -18,7 +19,7 @@ export const getPost = async (id: string) => {
       { __v: 0, is_deleted: 0, deleted_at: 0 }
     );
     if (!post) {
-      throw new Error("Post not found");
+      throw new CustomError("Post not found", 404);
     }
 
     return post;
@@ -91,7 +92,7 @@ export const deletePost = async (id: string, user_id: string) => {
       { new: true }
     );
     if (!post) {
-      throw new Error("Post not found");
+      throw new CustomError("Post not found", 404);
     }
 
     return post;
