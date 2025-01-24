@@ -2,20 +2,28 @@ import { useState } from "react";
 import { useUser } from "@/hooks/useUser";
 import Button from "@/components/buttons/Button";
 import Avatar from "@/components/modals/user/Avatar";
+import EditProfile from "@/components/modals/user/EditProfile";
 
 export default function Me() {
   const [showAvatarModal, setShowAvatarModal] = useState(false);
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
   const { user } = useUser();
 
   return (
     <>
+      <EditProfile
+        open={showEditProfileModal}
+        setOpen={setShowEditProfileModal}
+      />
       <Avatar open={showAvatarModal} setOpen={setShowAvatarModal} />
       <div className="flex flex-col">
         <div className="flex items-center p-2">
           <h1 className="flex-1 py-2 pl-2 text-2xl font-semibold text-blue-500">
             Mon profil
           </h1>
-          <Button type="button">Modifier</Button>
+          <Button type="button" onClick={() => setShowEditProfileModal(true)}>
+            Modifier
+          </Button>
         </div>
         <div className="flex flex-col p-2">
           <div className="flex items-center space-x-4">

@@ -40,10 +40,11 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 
   try {
-    const { email } = req.body;
+    const { email, username } = req.body;
 
     const updatedUser = await userService.updateUser(req.user?.id ?? "", {
       email,
+      username,
     });
 
     res.status(200).json(updatedUser);
