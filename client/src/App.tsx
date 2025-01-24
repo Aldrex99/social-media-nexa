@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { UserProvider } from "@contexts/UserContext";
+import { UserProvider } from "@/contexts/UserProvider";
 import { PrivateRoute } from "@utils/PrivateRoute";
 import UserRouteWrapper from "@utils/UserRouteWrapper";
 
@@ -8,6 +8,7 @@ import Register from "@pages/Register";
 import Todo from "@pages/Todo";
 import Post from "@pages/Post";
 import NotFound from "@pages/NotFound";
+import Logout from "@pages/Logout";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
                 path="/todo-list"
                 element={<UserRouteWrapper children={<Todo />} />}
               />
+              <Route path="/logout" element={<Logout />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

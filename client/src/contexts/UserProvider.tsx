@@ -1,0 +1,64 @@
+// UserProvider.tsx
+import React, { useState, useEffect } from "react";
+import { fetcher } from "@utils/fetch";
+import { UserContext, IUser, IUserContextValue } from "@contexts/UserContext";
+
+export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<IUser | null>(null);
+  const [userIsLoaded, setUserIsLoaded] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const getUser = async (reloadGet = false) => {
+    setUserIsLoaded(false);
+    try {
+      const response = await fetcher("/user");
+
+      if (response) {
+        const data: IUser = {
+          id: response.id,
+          email: response.email,
+          username: response.username,
+          role: response.role,
+          avatar: response.avatar,
+        };
+        setUser(data);
+      }
+
+      setIsAuthenticated(true);
+    } catch (error) {
+      if (reloadGet) {
+        console.log("Failed to get user", error);
+        return;
+      }
+    } finally {
+      setUserIsLoaded(true);
+    }
+  };
+
+  const logout = async (): Promise<boolean> => {
+    try {
+      await fetcher("/auth/logout");
+      setUser(null);
+      setIsAuthenticated(false);
+
+      return true;
+    } catch (error) {
+      console.log("Failed to logout", error);
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const value: IUserContextValue = {
+    user,
+    userIsLoaded,
+    isAuthenticated,
+    getUser,
+    logout,
+  };
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+};

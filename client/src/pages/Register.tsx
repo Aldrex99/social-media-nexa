@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useUser } from "@contexts/UserContext";
+import { useUser } from "@/hooks/useUser";
 import { Link, useNavigate } from "react-router-dom";
 import { fetcher } from "@utils/fetch";
 import TextInput from "@components/inputs/TextInput";

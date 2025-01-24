@@ -41,12 +41,12 @@ export const login = async (req: Request, res: Response) => {
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      sameSite: "none",
+      sameSite: "strict",
       secure: true,
     });
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      sameSite: "none",
+      sameSite: "strict",
       secure: true,
     });
 
@@ -92,7 +92,11 @@ export const newAccessTokenFromRefreshToken = async (
 
     const accessToken = generateAccessToken(req.user?.id, req.user?.role);
 
-    res.cookie("accessToken", accessToken, { httpOnly: true });
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
 
     res.status(200);
     res.end();
@@ -101,5 +105,16 @@ export const newAccessTokenFromRefreshToken = async (
     res
       .status(500)
       .json({ message: "An error occurred while getting new access token." });
+  }
+};
+
+export const logout = async (req: Request, res: Response) => {
+  try {
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    res.status(200).json({ message: "Logged out" });
+  } catch (error) {
+    console.error("Error logging out:", error);
+    res.status(500).json({ message: "An error occurred while logging out." });
   }
 };
