@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Button from "@components/buttons/Button";
 import { classNames } from "@utils/style";
-import { ITodo } from "@pages/Todo";
+import { ITodo } from "@/types/todo";
 
 type TTodoCardProps = {
   todo: ITodo;

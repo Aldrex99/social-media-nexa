@@ -23,6 +23,7 @@ export const createPost = async (req: Request, res: Response) => {
       content,
       imageLink,
     });
+    res.status(201).json({ message: "Post created" });
   } catch (error) {
     console.error("Error creating Todo:", error);
     res

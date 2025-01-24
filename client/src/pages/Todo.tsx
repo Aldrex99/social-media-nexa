@@ -4,16 +4,8 @@ import CreateTodoModal from "@components/modals/todo/CreateTodo";
 import EditTodoModal from "@components/modals/todo/EditTodo";
 import DeleteTodoModal from "@components/modals/todo/DeleteTodo";
 import TodoCard from "@components/TodoCard";
-
-export interface ITodo {
-  id: string;
-  title: string;
-  description: string;
-  imageLink: string;
-  done: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { ITodo } from "@/types/todo";
+import Button from "@/components/buttons/Button";
 
 export default function Todo() {
   const [todos, setTodos] = useState<ITodo[]>([]);
@@ -72,12 +64,9 @@ export default function Todo() {
           <h1 className="flex-1 py-2 pl-2 text-2xl font-semibold text-blue-500">
             Votre liste de tâches
           </h1>
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="h-fit w-fit rounded-lg bg-blue-500 px-3 py-2 text-white outline-none focus-visible:outline-none focus-visible:outline-offset-2 focus-visible:outline-blue-500"
-          >
+          <Button type="button" onClick={() => setShowCreateModal(true)}>
             Nouvelle tâche
-          </button>
+          </Button>
         </div>
         <div className="flex w-full flex-col space-y-4 px-3 sm:px-6">
           <ul

@@ -1,12 +1,5 @@
 import { createContext } from "react";
-
-interface IUser {
-  id: string;
-  email: string;
-  username: string;
-  role: string;
-  avatar?: string;
-}
+import { IUser } from "@/types/user";
 
 interface IUserContextValue {
   user: IUser | null;
@@ -17,4 +10,4 @@ interface IUserContextValue {
 }
 
 export const UserContext = createContext<IUserContextValue | null>(null);
-export type { IUser, IUserContextValue };
+export type { IUserContextValue };

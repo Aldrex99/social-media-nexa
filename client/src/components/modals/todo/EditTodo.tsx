@@ -10,7 +10,7 @@ import BaseModal from "@components/modals/BaseModal";
 import TextInput from "@components/inputs/TextInput";
 import ToggleInput from "@components/inputs/ToggleInput";
 import Button from "@components/buttons/Button";
-import { ITodo } from "@pages/Todo";
+import { ITodo } from "@/types/todo";
 
 type TEditTodoModalProps = {
   open: boolean;
@@ -192,7 +192,7 @@ export default function EditTodoModal({
           {loading ? (
             "Chargement..."
           ) : (
-            <span className="flex">
+            <span className="flex items-center justify-center">
               <CheckIcon className="mr-2 h-5 w-5" />
               Enregistrer
             </span>

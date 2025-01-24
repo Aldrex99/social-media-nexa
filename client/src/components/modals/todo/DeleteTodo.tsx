@@ -4,7 +4,7 @@ import { DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import BaseModal from "@components/modals/BaseModal";
 import Button from "@components/buttons/Button";
-import { ITodo } from "@pages/Todo";
+import { ITodo } from "@/types/todo";
 
 type TDeleteTodoModalProps = {
   open: boolean;
@@ -80,7 +80,7 @@ export default function DeleteTodoModal({
           {loading ? (
             "Chargement..."
           ) : (
-            <span className="flex">
+            <span className="flex items-center justify-center">
               <XMarkIcon className="mr-2 h-5 w-5" />
               Supprimer
             </span>

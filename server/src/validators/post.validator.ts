@@ -1,9 +1,6 @@
 import { body, param, query } from "express-validator";
 
 export const createPost = [
-  body("title")
-    .isString()
-    .withMessage("Le titre doit être une chaîne de caractères."),
   body("content")
     .isString()
     .withMessage("Le contenu doit être une chaîne de caractères."),

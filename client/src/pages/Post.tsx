@@ -1,24 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import CreatePostModal from "@/components/modals/post/CreatePostModal";
+import PostList from "@/components/PostList";
+import Button from "@/components/buttons/Button";
 
 export default function Post() {
+  const [showCreateModal, setShowCreateModal] = useState(true);
+
   useEffect(() => {
     document.title = "Social Nexa | Post";
   }, []);
 
   return (
     <>
+      {showCreateModal && (
+        <CreatePostModal open={showCreateModal} setOpen={setShowCreateModal} />
+      )}
       <div className="flex min-h-screen flex-col">
         <div className="flex items-center p-2">
           <h1 className="flex-1 py-2 pl-2 text-2xl font-semibold text-blue-500">
-            Les posts les plus récents
+            Posts de la communauté
           </h1>
-          <button
-            onClick={() => {}}
-            className="h-fit w-fit rounded-lg bg-blue-500 px-3 py-2 text-white outline-none focus-visible:outline-none focus-visible:outline-offset-2 focus-visible:outline-blue-500"
-          >
+          <Button type="button" onClick={() => setShowCreateModal(true)}>
             Nouveau post
-          </button>
+          </Button>
         </div>
+        <PostList />
       </div>
     </>
   );

@@ -35,7 +35,7 @@ export default function Button({
       onClick={onClick}
       disabled={disabled}
       className={classNames(
-        "flex h-fit w-fit items-center justify-center rounded-md px-4 py-2 text-sm font-medium",
+        "flex h-fit w-fit items-center justify-center rounded-md px-4 py-2 font-medium",
         `${variants[variant]}`,
         className ?? "",
       )}
