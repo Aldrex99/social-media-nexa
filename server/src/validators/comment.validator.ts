@@ -24,7 +24,9 @@ export const getComments = [
 ];
 
 export const deleteComment = [
-  param("id")
+  body("comment_id")
     .isMongoId()
-    .withMessage("L'ID doit être un identifiant MongoDB valide."),
+    .withMessage(
+      "L'ID du commentaire doit être un identifiant MongoDB valide."
+    ),
 ];

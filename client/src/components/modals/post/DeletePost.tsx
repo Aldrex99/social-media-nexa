@@ -69,7 +69,7 @@ export default function DeletePostModal({
           type="button"
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full border border-transparent bg-red-500 text-white hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+          className="w-full rounded-md border border-transparent bg-red-500 text-white hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
           variant="none"
         >
           {loading ? (

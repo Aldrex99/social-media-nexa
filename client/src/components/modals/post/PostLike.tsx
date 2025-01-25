@@ -17,8 +17,6 @@ export default function PostLike({ open, setOpen, post }: TPostLikeProps) {
     const fetchLikes = async () => {
       const response = await fetcher(`/interactions/likes/${post._id}`);
 
-      console.log(response);
-
       if (response) {
         setLikes(response);
       }

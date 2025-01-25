@@ -26,7 +26,17 @@ export const getComments = async (
         select: "username profilePictureLink _id",
       });
 
-    return comments;
+    const updatedComments = await Promise.all(
+      comments.map(async (comment) => {
+        if (!comment.user.profilePictureLink) {
+          comment.user.profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`;
+        }
+
+        return comment;
+      })
+    );
+
+    return updatedComments;
   } catch (error) {
     throw error;
   }

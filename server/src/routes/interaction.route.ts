@@ -21,7 +21,7 @@ router.get(
   commentController.getComments
 );
 router.delete(
-  "/comment/:id",
+  "/comment",
   commentValidator.deleteComment,
   commentController.deleteComment
 );

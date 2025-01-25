@@ -26,3 +26,16 @@ export interface ILike {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface IComment {
+  _id: string;
+  user: {
+    _id: string;
+    username?: string;
+    profilePictureLink?: string;
+  };
+  post_id: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

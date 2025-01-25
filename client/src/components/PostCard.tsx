@@ -9,6 +9,7 @@ import { HeartIcon as SolidHeart } from "@heroicons/react/24/solid";
 import { useUser } from "@/hooks/useUser";
 import { Link } from "react-router-dom";
 import PostLike from "@components/modals/post/PostLike";
+import PostModal from "@components/modals/post/PostModal";
 import DeletePostModal from "@components/modals/post/DeletePost";
 import Button from "@components/buttons/Button";
 
@@ -21,6 +22,7 @@ type TPostCardProps = {
 export default function PostCard({ post, posts, setPosts }: TPostCardProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showLikesModal, setShowLikesModal] = useState(false);
+  const [showPostModal, setShowPostModal] = useState(false);
   const { user } = useUser();
 
   const handleLike = async () => {
@@ -75,6 +77,16 @@ export default function PostCard({ post, posts, setPosts }: TPostCardProps) {
           post={post}
         />
       )}
+      {showPostModal && (
+        <PostModal
+          open={showPostModal}
+          setOpen={setShowPostModal}
+          post={post}
+          posts={posts}
+          setPosts={setPosts}
+        />
+      )}
+      {/* Post card */}
       <div className="mb-4 w-full rounded-lg bg-white p-4 shadow-md">
         {/* User par */}
         <div className="flex items-center justify-between">
@@ -142,7 +154,10 @@ export default function PostCard({ post, posts, setPosts }: TPostCardProps) {
               <OutlineHeart className="h-6 w-6" />
             </button>
           )}
-          <button className="flex w-full items-center justify-center">
+          <button
+            className="flex w-full items-center justify-center"
+            onClick={() => setShowPostModal(true)}
+          >
             <ChatBubbleOvalLeftIcon className="h-6 w-6" />
           </button>
         </div>
