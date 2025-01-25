@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { CustomError } from "@/utils/customError.util";
 import * as PostService from "@services/post.service";
+import { checkUserLiked } from "@/services/like.service";
+import { checkUserCommented } from "@/services/comment.service";
 import { validationResult } from "express-validator";
 import { validationErrorsUtil } from "@utils/validatorError.util";
 
@@ -53,6 +55,18 @@ export const getPost = async (
       return;
     }
 
+    const userLiked = await checkUserLiked(
+      post._id as string,
+      req.user?.id ?? ""
+    );
+    const userCommented = await checkUserCommented(
+      post._id as string,
+      req.user?.id ?? ""
+    );
+
+    post.set("userLiked", userLiked, { strict: false });
+    post.set("userCommented", userCommented, { strict: false });
+
     res.status(200).json(post);
   } catch (error) {
     next(new CustomError((error as Error).message, 500, "POST_GET_ERROR"));
@@ -72,7 +86,25 @@ export const getPosts = async (
       page ? parseInt(page as string) : 1
     );
 
-    res.status(200).json(posts);
+    const updatedPosts = await Promise.all(
+      posts.map(async (post) => {
+        const userLiked = await checkUserLiked(
+          post._id as string,
+          req.user?.id ?? ""
+        );
+        const userCommented = await checkUserCommented(
+          post._id as string,
+          req.user?.id ?? ""
+        );
+
+        post.set("userLiked", userLiked, { strict: false });
+        post.set("userCommented", userCommented, { strict: false });
+
+        return post;
+      })
+    );
+
+    res.status(200).json(updatedPosts);
   } catch (error) {
     next(new CustomError((error as Error).message, 500, "POSTS_GET_ERROR"));
   }

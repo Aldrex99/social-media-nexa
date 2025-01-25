@@ -1,5 +1,7 @@
 import { CustomError } from "@/utils/customError.util";
 import PostModel, { IPost } from "@models/post.model";
+import { countLikes } from "./like.service";
+import { countComments } from "./comment.service";
 
 export const createPost = async (data: Partial<IPost>) => {
   try {
@@ -27,6 +29,12 @@ export const getPost = async (id: string) => {
       post.user.profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`;
     }
 
+    const likesCount = await countLikes(id);
+    const commentsCount = await countComments(id);
+
+    post.set("likesCount", likesCount, { strict: false });
+    post.set("commentsCount", commentsCount, { strict: false });
+
     return post;
   } catch (error) {
     throw error;
@@ -44,13 +52,23 @@ export const getPosts = async (limit: number, page: number) => {
         select: "username profilePictureLink _id",
       });
 
-    posts.forEach((post) => {
-      if (!post.user.profilePictureLink) {
-        post.user.profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`;
-      }
-    });
+    const updatedPosts = await Promise.all(
+      posts.map(async (post) => {
+        if (!post.user.profilePictureLink) {
+          post.user.profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`;
+        }
 
-    return posts;
+        const likesCount = await countLikes(post._id as string);
+        const commentsCount = await countComments(post._id as string);
+
+        post.set("likesCount", likesCount, { strict: false });
+        post.set("commentsCount", commentsCount, { strict: false });
+
+        return post;
+      })
+    );
+
+    return updatedPosts;
   } catch (error) {
     throw error;
   }
@@ -71,13 +89,23 @@ export const getPostsByUser = async (
         select: "username profilePictureLink _id",
       });
 
-    posts.forEach((post) => {
-      if (!post.user.profilePictureLink) {
-        post.user.profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`;
-      }
-    });
+    const updatedPosts = await Promise.all(
+      posts.map(async (post) => {
+        if (!post.user.profilePictureLink) {
+          post.user.profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`;
+        }
 
-    return posts;
+        const likesCount = await countLikes(post._id as string);
+        const commentsCount = await countComments(post._id as string);
+
+        post.set("likesCount", likesCount, { strict: false });
+        post.set("commentsCount", commentsCount, { strict: false });
+
+        return post;
+      })
+    );
+
+    return updatedPosts;
   } catch (error) {
     throw error;
   }

@@ -8,6 +8,10 @@ export interface IPost {
   };
   content: string;
   imageLink?: string;
+  likesCount?: number;
+  commentsCount?: number;
+  userLiked?: boolean;
+  userCommented?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
