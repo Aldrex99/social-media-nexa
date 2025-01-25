@@ -72,12 +72,10 @@ export const removeLike = async (
   try {
     const { post_id } = req.body;
 
-    const removedLike = await LikeService.removeLike({
-      user: {
-        _id: req.user?.id ?? "",
-      },
+    const removedLike = await LikeService.removeLike(
       post_id,
-    });
+      req.user?.id ?? ""
+    );
 
     if (!removedLike) {
       next(new CustomError("Like not found", 404, "LIKE_NOT_FOUND_ERROR"));

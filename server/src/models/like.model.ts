@@ -14,11 +14,7 @@ export interface ILike {
 export interface ILikeDocument extends ILike, Document {}
 
 export const LikeSchema = new Schema<ILikeDocument>({
-  user: {
-    _id: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    username: { type: String },
-    profilePictureLink: { type: String },
-  },
+  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   post_id: { type: Schema.Types.ObjectId, ref: "Post", required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },

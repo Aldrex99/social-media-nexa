@@ -7,8 +7,8 @@ import * as commentController from "@controllers/comment.controller";
 const router = Router();
 
 router.post("/like", likeValidator.addLike, likeController.addLike);
-router.get("/like/:post_id", likeValidator.getLikes, likeController.getLikes);
-router.delete("/like/:id", likeValidator.removeLike, likeController.removeLike);
+router.get("/likes/:post_id", likeValidator.getLikes, likeController.getLikes);
+router.delete("/dislike", likeValidator.removeLike, likeController.removeLike);
 
 router.post(
   "/comment",
@@ -16,7 +16,7 @@ router.post(
   commentController.createComment
 );
 router.get(
-  "/comment/:post_id",
+  "/comments/:post_id",
   commentValidator.getComments,
   commentController.getComments
 );

@@ -15,11 +15,7 @@ export interface IComment {
 export interface ICommentDocument extends IComment, Document {}
 
 export const CommentSchema = new Schema<ICommentDocument>({
-  user: {
-    _id: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    username: { type: String },
-    profilePictureLink: { type: String },
-  },
+  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   post_id: { type: Schema.Types.ObjectId, ref: "Post", required: true },
   content: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },

@@ -26,15 +26,28 @@ export const getLikes = async (
         select: "username profilePictureLink _id",
       });
 
-    return likes;
+    const updatedLikes = await Promise.all(
+      likes.map(async (like) => {
+        if (!like.user.profilePictureLink) {
+          like.user.profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`;
+        }
+
+        return like;
+      })
+    );
+
+    return updatedLikes;
   } catch (error) {
     throw error;
   }
 };
 
-export const removeLike = async (data: Partial<ILike>) => {
+export const removeLike = async (post_id: string, user_id: string) => {
   try {
-    const like = await LikeModel.findOneAndDelete(data);
+    const like = await LikeModel.findOneAndDelete({
+      post_id,
+      user: user_id,
+    });
 
     return like;
   } catch (error) {
@@ -54,7 +67,10 @@ export const countLikes = async (post_id: string) => {
 
 export const checkUserLiked = async (post_id: string, user_id: string) => {
   try {
-    const like = await LikeModel.countDocuments({ post_id, user: user_id });
+    const like = await LikeModel.countDocuments({
+      post_id,
+      user: user_id,
+    });
 
     return like > 0;
   } catch (error) {

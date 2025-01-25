@@ -84,7 +84,7 @@ export default function DeletePostModal({
         <Button
           type="button"
           onClick={handleCancel}
-          className="w-full"
+          className="w-full rounded-md"
           variant="primaryFlat"
         >
           Annuler

@@ -11,6 +11,7 @@ import authRouter from "@routes/auth.route";
 import userRouter from "@routes/user.route";
 import todosRouter from "@routes/todo.route";
 import postsRouter from "@routes/post.route";
+import interactionRouter from "@routes/interaction.route";
 import { CustomError } from "@utils/customError.util";
 
 /* Creating the application */
@@ -24,6 +25,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", checkAccessToken, userRouter);
 app.use("/api/todos", checkAccessToken, todosRouter);
 app.use("/api/posts", checkAccessToken, postsRouter);
+app.use("/api/interactions", checkAccessToken, interactionRouter);
 
 /* Route for public files */
 app.use("/public", checkAccessToken, express.static("public"));

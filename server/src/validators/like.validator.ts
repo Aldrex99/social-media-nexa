@@ -21,7 +21,7 @@ export const getLikes = [
 ];
 
 export const removeLike = [
-  param("id")
+  body("post_id")
     .isMongoId()
-    .withMessage("L'ID doit être un identifiant MongoDB valide."),
+    .withMessage("L'ID du post doit être un identifiant MongoDB valide."),
 ];

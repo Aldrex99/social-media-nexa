@@ -9,7 +9,20 @@ export interface IPost {
   imageLink?: string;
   createdAt: Date;
   updatedAt: Date;
-  likeNumber: number;
-  commentNumber: number;
-  shareNumber: number;
+  likesCount: number;
+  commentsCount: number;
+  userLiked: boolean;
+  userCommented: boolean;
+}
+
+export interface ILike {
+  _id: string;
+  user: {
+    _id: string;
+    username?: string;
+    profilePictureLink?: string;
+  };
+  post_id: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
