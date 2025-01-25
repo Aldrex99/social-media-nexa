@@ -63,8 +63,8 @@ export default function CreatePostModal({
       const orderPostsByCreationDate = [newPost, ...posts];
 
       orderPostsByCreationDate.sort((a, b) => {
-        if (a.created_at < b.created_at) return 1;
-        if (a.created_at > b.created_at) return -1;
+        if (a.createdAt < b.createdAt) return 1;
+        if (a.createdAt > b.createdAt) return -1;
         return 0;
       });
 

@@ -44,7 +44,7 @@ export const login = async (email: string, password: string) => {
     }
 
     user.password = undefined;
-    user.reset_password_token = undefined;
+    user.resetPasswordToken = undefined;
 
     return user;
   } catch (error) {
@@ -60,12 +60,12 @@ export const forgotPassword = async (email: string) => {
     }
 
     // Generate reset password token
-    const reset_password_token = randomUUID();
+    const resetPasswordToken = randomUUID();
 
     // Update user with reset password token
     await UserModel.findOneAndUpdate(
       { email },
-      { reset_password_token },
+      { resetPasswordToken },
       { new: true }
     );
   } catch (error) {

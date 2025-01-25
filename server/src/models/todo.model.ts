@@ -5,25 +5,22 @@ export interface ITodo {
   title: string;
   description: string;
   imageLink?: string;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
   deleted_at?: Date;
   done: boolean;
-  is_deleted: boolean;
 }
 
 export interface ITodoDocument extends ITodo, Document {}
 
 export const TodoSchema = new Schema<ITodoDocument>({
+  user_id: { type: Schema.Types.ObjectId, ref: "User" },
   title: { type: String, required: true },
   description: { type: String, required: true },
   imageLink: { type: String },
-  created_at: { type: Date, default: Date.now },
-  updated_at: { type: Date, default: Date.now },
-  deleted_at: { type: Date },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
   done: { type: Boolean, default: false },
-  is_deleted: { type: Boolean, default: false },
-  user_id: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 const TodoModel: Model<ITodoDocument> = model<ITodoDocument>(

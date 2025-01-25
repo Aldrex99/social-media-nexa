@@ -14,12 +14,17 @@ export const createPost = async (data: Partial<IPost>) => {
 
 export const getPost = async (id: string) => {
   try {
-    const post = await PostModel.findOne(
-      { _id: id, is_deleted: false },
-      { __v: 0, is_deleted: 0, deleted_at: 0 }
-    );
+    const post = await PostModel.findOne({ _id: id }, { __v: 0 }).populate({
+      path: "user",
+      select: "username profilePictureLink _id",
+    });
+
     if (!post) {
       throw new CustomError("Post not found", 404);
+    }
+
+    if (!post.user.profilePictureLink) {
+      post.user.profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`;
     }
 
     return post;
@@ -30,35 +35,22 @@ export const getPost = async (id: string) => {
 
 export const getPosts = async (limit: number, page: number) => {
   try {
-    const posts = await PostModel.find(
-      { is_deleted: false },
-      { __v: 0, is_deleted: 0, deleted_at: 0 }
-    )
-      .sort({ created_at: -1 })
+    const posts = await PostModel.find({}, { __v: 0 })
+      .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
-      .limit(limit);
+      .limit(limit)
+      .populate({
+        path: "user",
+        select: "username profilePictureLink _id",
+      });
 
-    await PostModel.populate(posts, {
-      path: "user_id",
-      select: "username profilePictureLink _id",
+    posts.forEach((post) => {
+      if (!post.user.profilePictureLink) {
+        post.user.profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`;
+      }
     });
 
-    const transformedPosts = posts.map((post) => ({
-      ...post.toObject(),
-      user:
-        typeof post.user_id === "object"
-          ? {
-              username: post.user_id.username,
-              profilePictureLink:
-                post.user_id.profilePictureLink ??
-                `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`,
-            }
-          : { username: "", profilePictureLink: "" },
-      user_id:
-        typeof post.user_id === "object" ? post.user_id._id : post.user_id,
-    }));
-
-    return transformedPosts;
+    return posts;
   } catch (error) {
     throw error;
   }
@@ -70,13 +62,20 @@ export const getPostsByUser = async (
   page: number
 ) => {
   try {
-    const posts = await PostModel.find(
-      { user_id, is_deleted: false },
-      { __v: 0, is_deleted: 0, deleted_at: 0 }
-    )
-      .sort({ created_at: -1 })
+    const posts = await PostModel.find({ user: user_id }, { __v: 0 })
+      .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
-      .limit(limit);
+      .limit(limit)
+      .populate({
+        path: "user",
+        select: "username profilePictureLink _id",
+      });
+
+    posts.forEach((post) => {
+      if (!post.user.profilePictureLink) {
+        post.user.profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`;
+      }
+    });
 
     return posts;
   } catch (error) {
@@ -86,11 +85,10 @@ export const getPostsByUser = async (
 
 export const deletePost = async (id: string, user_id: string) => {
   try {
-    const post = await PostModel.findOneAndUpdate(
-      { _id: id, user_id, is_deleted: false },
-      { is_deleted: true, deleted_at: new Date() },
-      { new: true }
-    );
+    const post = await PostModel.findOneAndDelete({
+      _id: id,
+      user: user_id,
+    });
     if (!post) {
       throw new CustomError("Post not found", 404);
     }

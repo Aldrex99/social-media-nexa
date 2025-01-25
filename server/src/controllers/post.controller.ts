@@ -19,7 +19,9 @@ export const createPost = async (
     const { content, imageLink } = req.body;
 
     const newPost = await PostService.createPost({
-      user_id: req.user!.id,
+      user: {
+        _id: req.user?.id ?? "",
+      },
       content,
       imageLink,
     });

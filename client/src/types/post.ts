@@ -7,8 +7,8 @@ export interface IPost {
   };
   content: string;
   imageLink?: string;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
   likeNumber: number;
   commentNumber: number;
   shareNumber: number;

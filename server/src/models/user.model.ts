@@ -5,10 +5,10 @@ export interface IUser {
   username: string;
   role: string;
   password?: string;
-  reset_password_token?: string;
+  resetPasswordToken?: string;
   profilePictureLink?: string;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface IUserDocument extends IUser, Document {}
@@ -18,10 +18,10 @@ export const UserSchema = new Schema<IUserDocument>({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, required: true, default: "user" },
-  reset_password_token: { type: String },
+  resetPasswordToken: { type: String },
   profilePictureLink: { type: String },
-  created_at: { type: Date, default: Date.now },
-  updated_at: { type: Date, default: Date.now },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
 
 const UserModel: Model<IUserDocument> = model<IUserDocument>(
