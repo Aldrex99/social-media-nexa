@@ -1,7 +1,7 @@
 export interface IPost {
   _id: string;
-  user_id: string;
   user: {
+    _id: string;
     username: string;
     profilePictureLink: string;
   };

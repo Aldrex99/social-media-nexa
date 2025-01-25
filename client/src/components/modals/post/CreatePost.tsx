@@ -56,6 +56,7 @@ export default function CreatePostModal({
       });
 
       newPost.user = {
+        _id: user?.id ?? "",
         username: user?.username ?? "",
         profilePictureLink: user?.profilePictureLink ?? "",
       };

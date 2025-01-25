@@ -40,11 +40,11 @@ export default function PostCard({ post, posts, setPosts }: TPostCardProps) {
               alt={post.user.username}
               className="size-10 rounded-full object-cover"
             />
-            <Link to={`/profile/${post.user_id}`} className="font-semibold">
+            <Link to={`/profile/${post.user._id}`} className="font-semibold">
               {post.user.username}
             </Link>
           </div>
-          {user?.id === post.user_id && (
+          {user?.id === post.user._id && (
             <Button
               type="button"
               className="text-red-500"
